@@ -79,8 +79,9 @@
         android:layout_gravity="center_horizontal"
         android:clickable="true"
         android:gravity="bottom"
-        android:text="@string/tv_register"
+        android:text="No Account Yet?\n Create One Now"
         android:textSize="@dimen/text_small"
+        android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
 
 </RelativeLayout>

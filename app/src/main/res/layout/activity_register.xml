@@ -28,10 +28,10 @@
         android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/etName"
+            android:id="@+id/etFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_et_name"
+            android:hint="First Name"
             android:inputType="text"
             android:textSize="@dimen/text_medium" />
     </android.support.design.widget.TextInputLayout>
@@ -42,12 +42,26 @@
         android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/etPassword"
+            android:id="@+id/etLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_et_pass"
-            android:inputType="textPassword"
+            android:hint="Last Name"
+            android:inputType="text"
             android:textSize="@dimen/text_medium" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+    <EditText
+        android:id="@+id/etPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_et_pass"
+        android:inputType="textPassword"
+        android:textSize="@dimen/text_medium" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
