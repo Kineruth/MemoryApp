@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/padding_sides">
+    android:layout_width="319dp"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="36dp"
+    android:layout_marginTop="60dp"
+    android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -55,13 +56,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
-    <EditText
-        android:id="@+id/etPassword2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_et_pass"
-        android:inputType="textPassword"
-        android:textSize="@dimen/text_medium" />
+        <EditText
+            android:id="@+id/etPassword2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_et_pass"
+            android:inputType="textPassword"
+            android:textSize="@dimen/text_medium" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
