@@ -1,0 +1,10 @@
+<resources>
+    <string name="hint_et_email">Email</string>
+    <string name="hint_et_pass">Password</string>
+    <string name="btn_login">Sign In</string>
+    <string name="tv_register">No account yet? Create one</string>
+    <string name="checkbox_remember">Remember me</string>
+    <string name="hint_et_name">Name</string>
+    <string name="btn_register">Register</string>
+
+</resources>
