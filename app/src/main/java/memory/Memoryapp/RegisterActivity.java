@@ -3,9 +3,16 @@ package memory.Memoryapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+<<<<<<< HEAD
+import android.widget.EditText;
+
+EditText email, firstName, LastName, password;
+Button register;
+=======
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+>>>>>>> b0f0191a990c2ce6a17319785174b104ae325f39
 
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
