@@ -14,6 +14,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.agreeNContinueTVBtn).setOnClickListener(this);
     }
 
+
     @Override
     public void onClick(View v) {
         switch(v.getId())
@@ -25,4 +26,5 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
+
 }
