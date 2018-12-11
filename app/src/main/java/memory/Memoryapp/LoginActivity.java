@@ -23,16 +23,17 @@ import java.util.List;
 
 public class LoginActivity extends Activity implements View.OnClickListener, Validator.ValidationListener {
 
-    private static boolean valIsDone;
+
     @NotEmpty()
     @Email()
     private EditText email;
     @NotEmpty()
     @Password(min = 1, message = "Minimum 6 characters")
     private EditText password;
+    private Validator validator;
+    private static boolean valIsDone;
     private FirebaseAuth mAuth;
     private FirebaseUser currentuser;
-    private Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

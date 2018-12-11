@@ -24,7 +24,6 @@ import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
 
-    private static boolean valIsDone;
     @NotEmpty()
     @Email()
     private EditText email;
@@ -38,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     @Password(message = "Minimum 6 characters")
     private EditText password;
     private Validator validator;
+    private static boolean valIsDone;
     private FirebaseAuth mAuth;
 
     @Override

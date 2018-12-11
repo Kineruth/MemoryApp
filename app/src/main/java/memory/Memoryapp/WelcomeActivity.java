@@ -23,7 +23,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         currentUser = mAuth.getCurrentUser();
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -37,8 +36,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-
-
     @Override
     public void onClick(View v) {
         switch(v.getId())
@@ -50,5 +47,4 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
-
 }

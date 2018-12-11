@@ -24,8 +24,6 @@ public class TabAccessAdapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
-
-
     }
 
     @Override

@@ -17,11 +17,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("MemoryApp");
-
         myViewPager = findViewById(R.id.main_tabs_pager);
         myTabAccessAdapter = new TabAccessAdapter(getSupportFragmentManager());
         myViewPager.setAdapter(myTabAccessAdapter);
