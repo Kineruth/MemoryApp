@@ -58,6 +58,22 @@
             android:text="@string/btn_login"
             android:textSize="@dimen/text_medium" />
 
+        <TextView
+            android:id="@+id/tvResetPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:gravity="bottom"
+            android:text="Restart Password"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold" />
+
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package memory.Memoryapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,7 +34,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
     private Validator validator;
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
-    private FirebaseUser currentuser;
+    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,35 +42,20 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
         setContentView(R.layout.activity_login);
         findViewById(R.id.btnLogin).setOnClickListener(this);
         findViewById(R.id.tvRegister).setOnClickListener(this);
+        findViewById(R.id.tvResetPassword).setOnClickListener(this);
         email = findViewById(R.id.etEmail);
         password = findViewById(R.id.etPassword);
         validator = new Validator(this);
         validator.setValidationListener(this);
         mAuth = FirebaseAuth.getInstance();
-        currentuser = mAuth.getCurrentUser();
+        loadingBar = new ProgressDialog(this);
     }
 
     @Override
     public void onClick(View v) {
         validator.validate();
         if (valIsDone && v.getId() == R.id.btnLogin) {
-            final String mail = email.getText().toString();
-            String pass = password.getText().toString();
-            mAuth.signInWithEmailAndPassword(mail,pass)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                            else{
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-
+            loginAccount();
         }
         else if (v.getId() == R.id.tvRegister) {
             Intent intent = new Intent(this, RegisterActivity.class);
@@ -77,11 +63,37 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
             email.setError(null);
             password.setError(null);
         }
+        else if (v.getId() == R.id.tvResetPassword){
+            Intent intent = new Intent(this, ResetPasswordActivity.class);
+            startActivity(intent);
+            email.setError(null);
+            password.setError(null);
+        }
     }
 
+    private void loginAccount(){
+        final String mail = email.getText().toString();
+        String pass = password.getText().toString();
+        loadingBar.setTitle("Login Account");
+        loadingBar.setMessage("Please wait, while we are login to your account for you...");
+        loadingBar.show();
+        mAuth.signInWithEmailAndPassword(mail,pass)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            loadingBar.dismiss();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
-
-
+    }
 
     @Override
     public void onValidationSucceeded() {

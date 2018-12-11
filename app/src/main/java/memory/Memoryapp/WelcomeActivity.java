@@ -30,10 +30,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             finish();
         }
-        else{
-            startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
-            finish();
-        }
     }
 
     @Override
@@ -44,7 +40,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
-                break;
         }
     }
 }

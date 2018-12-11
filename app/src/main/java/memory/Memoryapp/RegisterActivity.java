@@ -1,5 +1,6 @@
 package memory.Memoryapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     private Validator validator;
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
+    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         validator = new Validator(this);
         validator.setValidationListener(this);
         mAuth = FirebaseAuth.getInstance();
+        loadingBar = new ProgressDialog(this);
     }
 
     @Override
@@ -65,7 +68,6 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         for(ValidationError error: errors){
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
-
             if(view instanceof EditText){
                 ((EditText)view).setError(message);
             }
@@ -82,10 +84,6 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
             switch (v.getId()) {
                 case (R.id.btnRegister):
                     CreateNewAccount();
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                    break;
             }
         }
     }
@@ -95,6 +93,9 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         final String first = firstName.getText().toString();
         final String last = lastName.getText().toString();
         String pass = password.getText().toString();
+        loadingBar.setTitle("Creating New Account");
+        loadingBar.setMessage("Please wait, while we are creating new account for you...");
+        loadingBar.show();
         mAuth.createUserWithEmailAndPassword(mail,pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -107,7 +108,8 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(RegisterActivity.this, task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                        loadingBar.dismiss();
+                                        BackToLogin();
                                     }
                                     else{
                                         Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -121,4 +123,10 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                     }
                 });
     }
+    private void BackToLogin(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
+
