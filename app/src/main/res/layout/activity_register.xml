@@ -13,7 +13,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:theme="@style/text">
 
         <EditText
             android:id="@+id/etEmail"
@@ -27,7 +28,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:theme="@style/text">
 
         <EditText
             android:id="@+id/etFirstName"
@@ -41,7 +43,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:theme="@style/text">
 
         <EditText
             android:id="@+id/etLastName"
@@ -55,7 +58,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:theme="@style/text">
 
         <EditText
             android:id="@+id/etPassword2"

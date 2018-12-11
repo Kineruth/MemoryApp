@@ -41,7 +41,7 @@
         android:paddingBottom="10dp"
         android:text="Enter"
         android:textAllCaps="true"
-        android:textColor="@color/white"
+        android:textColor="#ffffff"
         android:textStyle="bold"
         android:textSize="24dp"/>
 </RelativeLayout>

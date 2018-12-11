@@ -20,7 +20,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:theme="@style/text">
 
             <EditText
                 android:id="@+id/etEmail"
@@ -35,7 +36,8 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:theme="@style/text">
 
             <EditText
                 android:id="@+id/etPassword"
@@ -46,15 +48,6 @@
                 android:textSize="@dimen/text_medium" />
 
         </android.support.design.widget.TextInputLayout>
-
-        <CheckBox
-            android:id="@+id/checkboxRemember"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/checkbox_remember"
-            android:textSize="@dimen/text_small" />
 
         <Button
             android:id="@+id/btnLogin"
