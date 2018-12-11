@@ -3,10 +3,16 @@ package memory.Memoryapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -18,14 +24,14 @@ import java.util.List;
 public class LoginActivity extends Activity implements View.OnClickListener, Validator.ValidationListener {
 
     private static boolean valIsDone;
-
     @NotEmpty()
     @Email()
     private EditText email;
     @NotEmpty()
     @Password(min = 1, message = "Minimum 6 characters")
     private EditText password;
-
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentuser;
     private Validator validator;
 
     @Override
@@ -38,14 +44,31 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
         password = findViewById(R.id.etPassword);
         validator = new Validator(this);
         validator.setValidationListener(this);
+        mAuth = FirebaseAuth.getInstance();
+        currentuser = mAuth.getCurrentUser();
     }
 
     @Override
     public void onClick(View v) {
         validator.validate();
         if (valIsDone && v.getId() == R.id.btnLogin) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
+            final String mail = email.getText().toString();
+            String pass = password.getText().toString();
+            mAuth.signInWithEmailAndPassword(mail,pass)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else{
+                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+
         }
         else if (v.getId() == R.id.tvRegister) {
             Intent intent = new Intent(this, RegisterActivity.class);

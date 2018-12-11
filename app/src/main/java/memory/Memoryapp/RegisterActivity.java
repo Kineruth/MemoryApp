@@ -25,7 +25,6 @@ import java.util.List;
 public class RegisterActivity extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
 
     private static boolean valIsDone;
-
     @NotEmpty()
     @Email()
     private EditText email;
@@ -38,16 +37,13 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     @NotEmpty()
     @Password(message = "Minimum 6 characters")
     private EditText password;
-
     private Validator validator;
-
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         email = findViewById(R.id.etEmail);
         firstName = findViewById(R.id.etFirstName);
         lastName = findViewById(R.id.etLastName);
@@ -55,7 +51,6 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         findViewById(R.id.btnRegister).setOnClickListener(this);
         validator = new Validator(this);
         validator.setValidationListener(this);
-
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -100,9 +95,6 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         final String first = firstName.getText().toString();
         final String last = lastName.getText().toString();
         String pass = password.getText().toString();
-
-
-
         mAuth.createUserWithEmailAndPassword(mail,pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
