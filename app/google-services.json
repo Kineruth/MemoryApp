@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "106316293701",
-    "firebase_url": "https://memoryapp-68714.firebaseio.com",
-    "project_id": "memoryapp-68714",
-    "storage_bucket": "memoryapp-68714.appspot.com"
+    "project_number": "529887631487",
+    "firebase_url": "https://memoryapp-abb58.firebaseio.com",
+    "project_id": "memoryapp-abb58",
+    "storage_bucket": "memoryapp-abb58.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:106316293701:android:b27df5358d4198e4",
+        "mobilesdk_app_id": "1:529887631487:android:b27df5358d4198e4",
         "android_client_info": {
           "package_name": "memory.memoryapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "106316293701-3cfo2okrl6fubf99itaij7a4ed986g6a.apps.googleusercontent.com",
+          "client_id": "529887631487-6fstjqqobtisft1m1ueel80ahqkarhr7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "memory.memoryapp",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "106316293701-becpsr41e921hs8b9pcetu1kq9ltkon2.apps.googleusercontent.com",
+          "client_id": "529887631487-kaah0s53erqf8obvlaeder1ihnij4m3m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCMfpm87So0qPtB_7R_pN2jqTcRSUesY_c"
+          "current_key": "AIzaSyDEMihjN5HIW-ebhwR5bgpjC9LW67IsVFo"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "106316293701-becpsr41e921hs8b9pcetu1kq9ltkon2.apps.googleusercontent.com",
+              "client_id": "529887631487-kaah0s53erqf8obvlaeder1ihnij4m3m.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
