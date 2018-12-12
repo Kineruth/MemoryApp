@@ -58,17 +58,28 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
             loginAccount();
         }
         else if (v.getId() == R.id.tvRegister) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
-            email.setError(null);
-            password.setError(null);
+            registerActivity();
         }
         else if (v.getId() == R.id.tvResetPassword){
-            Intent intent = new Intent(this, ResetPasswordActivity.class);
-            startActivity(intent);
-            email.setError(null);
-            password.setError(null);
+            resetPasswordActivity();
         }
+    }
+
+    private void resetPasswordActivity() {
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
+        startActivity(intent);
+        clearError();
+    }
+
+    private void clearError() {
+        email.setError(null);
+        password.setError(null);
+    }
+
+    private void registerActivity() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        clearError();
     }
 
     private void loginAccount(){

@@ -13,7 +13,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -37,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     private Validator validator;
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase mData;
     private ProgressDialog loadingBar;
 
     @Override
@@ -50,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         validator = new Validator(this);
         validator.setValidationListener(this);
         mAuth = FirebaseAuth.getInstance();
+        mData = FirebaseDatabase.getInstance();
         loadingBar = new ProgressDialog(this);
     }
 
@@ -79,12 +85,12 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         if (valIsDone) {
             switch (v.getId()) {
                 case (R.id.btnRegister):
-                    CreateNewAccount();
+                    createNewAccount();
             }
         }
     }
 
-    private void CreateNewAccount(){
+    private void createNewAccount(){
         final String mail = email.getText().toString();
         String pass = password.getText().toString();
         final String name = fullname.getText().toString();
@@ -97,14 +103,14 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             User user = new User(name,FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            mData.getReference("Users")
+                                    .child(mAuth.getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
                                         loadingBar.dismiss();
-                                        BackToLogin();
+                                        loginActivity();
                                     }
                                     else{
                                         loadingBar.dismiss();
@@ -120,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                     }
                 });
     }
-    private void BackToLogin(){
+    private void loginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();

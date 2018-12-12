@@ -83,7 +83,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             loadingBar.dismiss();
-                            BackToLogin();
+                            loginActivity();
                         }
                         else{
                             Toast.makeText(ResetPasswordActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -91,7 +91,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
                     }
                 });
     }
-    private void BackToLogin(){
+    private void loginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
