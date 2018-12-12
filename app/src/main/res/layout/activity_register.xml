@@ -1,82 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:layout_marginTop="60dp"
-    android:orientation="vertical"
-    android:paddingLeft="36dp"
-    android:paddingRight="36dp">
+    android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
+    <ImageView
+        android:id="@+id/register_image"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/signup_photo"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitCenter"/>
+    <EditText
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:theme="@style/text">
-
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_et_email"
-            android:inputType="textEmailAddress"
-            android:textSize="@dimen/text_medium" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
+        android:layout_alignParentStart="true"
+        android:hint="@string/hint_et_email"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/inputs"
+        android:layout_below="@+id/register_image"
+        android:padding="4dp"
+        android:drawableStart="@drawable/email"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"/>
+    <EditText
+        android:id="@+id/etFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:theme="@style/text">
-
-        <EditText
-            android:id="@+id/etFirstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="First Name"
-            android:inputType="text"
-            android:textSize="@dimen/text_medium" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
+        android:layout_alignParentStart="true"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:background="@drawable/inputs"
+        android:layout_below="@+id/etEmail"
+        android:padding="4dp"
+        android:drawableStart="@drawable/edit_profile"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"/>
+    <EditText
+        android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:theme="@style/text">
-
-        <EditText
-            android:id="@+id/etLastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Last Name"
-            android:inputType="text"
-            android:textSize="@dimen/text_medium" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:theme="@style/text">
-
-        <EditText
-            android:id="@+id/etPassword2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_et_pass"
-            android:inputType="textPassword"
-            android:textSize="@dimen/text_medium" />
-    </android.support.design.widget.TextInputLayout>
-
+        android:layout_alignParentStart="true"
+        android:hint="@string/hint_et_pass"
+        android:inputType="textPassword"
+        android:background="@drawable/inputs"
+        android:layout_below="@+id/etFullName"
+        android:padding="4dp"
+        android:drawableStart="@drawable/password"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"/>
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/etPassword"
+        android:padding="4dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/my_button"
-        android:text="@string/btn_register"
-        android:textSize="@dimen/text_medium" />
-
-</LinearLayout>
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:text="Register"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        android:textColor="@android:color/background_light"
+        android:background="@drawable/my_button"/>
+</RelativeLayout>

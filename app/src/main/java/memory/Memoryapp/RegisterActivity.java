@@ -29,14 +29,11 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     @Email()
     private EditText email;
     @NotEmpty()
-    @Pattern(message = "Input must contain only letters", regex = "[a-zA-Z][a-zA-Z ]+")
-    private EditText firstName;
-    @NotEmpty()
-    @Pattern(message = "Input must contain only letters", regex = "[a-zA-Z][a-zA-Z ]+")
-    private EditText lastName;
-    @NotEmpty()
     @Password(message = "Minimum 6 characters")
     private EditText password;
+    @NotEmpty
+    @Pattern(message = "Input must contain only letters", regex = "[a-zA-Z][a-zA-Z ]+")
+    private EditText fullname;
     private Validator validator;
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
@@ -47,9 +44,8 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         email = findViewById(R.id.etEmail);
-        firstName = findViewById(R.id.etFirstName);
-        lastName = findViewById(R.id.etLastName);
-        password = findViewById(R.id.etPassword2);
+        password = findViewById(R.id.etPassword);
+        fullname = findViewById(R.id.etFullName);
         findViewById(R.id.btnRegister).setOnClickListener(this);
         validator = new Validator(this);
         validator.setValidationListener(this);
@@ -90,9 +86,8 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
 
     private void CreateNewAccount(){
         final String mail = email.getText().toString();
-        final String first = firstName.getText().toString();
-        final String last = lastName.getText().toString();
         String pass = password.getText().toString();
+        final String name = fullname.getText().toString();
         loadingBar.setTitle("Creating New Account");
         loadingBar.setMessage("Please wait, while we are creating new account for you...");
         loadingBar.show();
@@ -101,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            User user = new User(mail, first , last);
+                            User user = new User(name,FirebaseAuth.getInstance().getCurrentUser().getUid());
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -112,12 +107,14 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                                         BackToLogin();
                                     }
                                     else{
+                                        loadingBar.dismiss();
                                         Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
                         }
                         else{
+                            loadingBar.dismiss();
                             Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }

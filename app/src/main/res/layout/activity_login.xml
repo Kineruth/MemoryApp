@@ -1,95 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:padding="@dimen/padding_sides">
+    android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:id="@+id/ll1"
-        android:layout_width="319dp"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="60dp"
-        android:orientation="vertical">
+        android:layout_centerHorizontal="true">
 
-
-        <android.support.design.widget.TextInputLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/text">
-
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/login_image"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:src="@drawable/login_photo"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitCenter"/>
             <EditText
-                android:id="@+id/etEmail"
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/hint_et_email"
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/inputs"
+                    android:layout_below="@+id/login_image"
+                    android:padding="4dp"
+                    android:drawableStart="@drawable/email"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="17dp"/>
+            <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/hint_et_pass"
+                    android:inputType="textPassword"
+                    android:background="@drawable/inputs"
+                    android:layout_below="@+id/etEmail"
+                    android:padding="4dp"
+                    android:drawableStart="@drawable/password"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="17dp"/>
+            <TextView
+                android:id="@+id/tvResetPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_et_email"
-                android:inputType="textEmailAddress"
-                android:textSize="@dimen/text_medium" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/text">
-
-            <EditText
-                android:id="@+id/etPassword"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/etPassword"
+                android:text="Forget Password"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:textAlignment="center"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"/>
+            <Button
+                android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_et_pass"
-                android:inputType="textPassword"
-                android:textSize="@dimen/text_medium" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/my_button"
-            android:text="@string/btn_login"
-            android:textSize="@dimen/text_medium" />
-
-        <TextView
-            android:id="@+id/tvResetPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:clickable="true"
-            android:gravity="bottom"
-            android:text="Restart Password"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_small"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center_horizontal"
-        android:clickable="true"
-        android:gravity="bottom"
-        android:text="No Account Yet?\n Create One Now"
-        android:textSize="@dimen/text_small"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold" />
-
+                android:layout_below="@id/tvResetPassword"
+                android:padding="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:textSize="24sp"
+                android:textColor="@android:color/background_light"
+                android:background="@drawable/my_button"/>
+            <TextView
+                android:id="@+id/tvRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/btnLogin"
+                android:text="No Account Yet?\n Create One Now"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:textAlignment="center"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"/>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

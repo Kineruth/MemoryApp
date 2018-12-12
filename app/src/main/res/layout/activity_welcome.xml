@@ -32,8 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/btn_green_round_corners"
         android:paddingLeft="35dp"
         android:paddingTop="10dp"
@@ -42,6 +41,6 @@
         android:text="Enter"
         android:textAllCaps="true"
         android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:textSize="24dp"/>
+        android:textSize="24dp"
+        android:textStyle="bold" />
 </RelativeLayout>

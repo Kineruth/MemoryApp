@@ -88,6 +88,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
                             finish();
                         }
                         else{
+                            loadingBar.dismiss();
                             Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
