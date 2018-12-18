@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     private Validator validator;
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mData;
+    private DatabaseReference mData;
     private ProgressDialog loadingBar;
 
     @Override
@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         validator = new Validator(this);
         validator.setValidationListener(this);
         mAuth = FirebaseAuth.getInstance();
-        mData = FirebaseDatabase.getInstance();
+        mData = FirebaseDatabase.getInstance().getReference();
         loadingBar = new ProgressDialog(this);
     }
 
@@ -102,8 +102,8 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            User user = new User(name,FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            mData.getReference("Users")
+                            User user = new User(name,mAuth.getCurrentUser().getUid());
+                            mData.child("Users")
                                     .child(mAuth.getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

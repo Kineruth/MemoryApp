@@ -1,8 +1,6 @@
 package memory.Memoryapp;
 
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,9 +12,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private ViewPager myViewPager;
-    private TabLayout myTabLayout;
-    private TabAccessAdapter myTabAccessAdapter;
     private FirebaseAuth mAuth;
 
     @Override
@@ -26,11 +21,10 @@ public class MainActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("MemoryApp");
-        myViewPager = findViewById(R.id.main_tabs_pager);
-        myTabAccessAdapter = new TabAccessAdapter(getSupportFragmentManager());
-        myViewPager.setAdapter(myTabAccessAdapter);
-        myTabLayout = findViewById(R.id.main_tabs);
-        myTabLayout.setupWithViewPager(myViewPager);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.diaryFrame, new DiaryFragment())
+                .commit();
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -47,14 +41,23 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.main_logout_option){
             loginActivity();
         }
-        else if(item.getItemId() == R.id.main_setting_option){
+        if(item.getItemId() == R.id.main_setting_option){
             settingsActivity();
         }
-        else if(item.getItemId() == R.id.main_find_friends_option){
+        if(item.getItemId() == R.id.main_create_group_option){
+            createGroupActivity();
+
+        }
+        if(item.getItemId() == R.id.main_find_friends_option){
 
         }
 
         return true;
+    }
+
+    private void createGroupActivity() {
+        Intent intent = new Intent(MainActivity.this, CreateGroupActivity.class);
+        startActivity(intent);
     }
 
     private void settingsActivity() {

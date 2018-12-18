@@ -95,8 +95,8 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
                         if(task.isSuccessful()){
                             loadingBar.dismiss();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
                             finish();
+                            startActivity(intent);
                         }
                         else{
                             loadingBar.dismiss();
