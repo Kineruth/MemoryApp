@@ -19,7 +19,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.util.List;
 
-public class ResetPasswordActivity extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
+public class ResetPasswordActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     @NotEmpty()
     @Email()
@@ -33,12 +33,52 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
+        initFields();
+        initValidator();
+        initFireBase();
+    }
+
+    private void initFields(){
         email = findViewById(R.id.etResetEmail);
-        findViewById(R.id.btnReset).setOnClickListener(this);
+        findViewById(R.id.btnReset).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickOnbtnReset();
+            }
+        });
+        loadingBar = new ProgressDialog(this);
+    }
+
+    private void initValidator(){
         validator = new Validator(this);
         validator.setValidationListener(this);
+    }
+
+    private void initFireBase(){
         mAuth = FirebaseAuth.getInstance();
-        loadingBar = new ProgressDialog(this);
+    }
+
+    private void clickOnbtnReset() {
+        validator.validate();
+        if(valIsDone){
+            final String mail = email.getText().toString();
+            loadingBar.setTitle("Reset Password");
+            loadingBar.setMessage("Please wait, while we are reset your password account for you...");
+            loadingBar.show();
+            mAuth.sendPasswordResetEmail(mail)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                loadingBar.dismiss();
+                                loginActivity();
+                            }
+                            else{
+                                Toast.makeText(ResetPasswordActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+        }
     }
 
     @Override
@@ -61,36 +101,6 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        validator.validate();
-        if (valIsDone) {
-            switch (v.getId()) {
-                case (R.id.btnReset):
-                    resetPassword();
-            }
-        }
-    }
-
-    private void resetPassword(){
-        final String mail = email.getText().toString();
-        loadingBar.setTitle("Reset Password");
-        loadingBar.setMessage("Please wait, while we are reset your password account for you...");
-        loadingBar.show();
-        mAuth.sendPasswordResetEmail(mail)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            loadingBar.dismiss();
-                            loginActivity();
-                        }
-                        else{
-                            Toast.makeText(ResetPasswordActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
     private void loginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

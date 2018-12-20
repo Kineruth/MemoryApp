@@ -22,7 +22,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
 
-public class LoginActivity extends Activity implements View.OnClickListener, Validator.ValidationListener {
+public class LoginActivity extends Activity implements Validator.ValidationListener {
 
 
     @NotEmpty()
@@ -40,32 +40,78 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        findViewById(R.id.btnLogin).setOnClickListener(this);
-        findViewById(R.id.tvRegister).setOnClickListener(this);
-        findViewById(R.id.tvResetPassword).setOnClickListener(this);
+        initFields();
+        initValidator();
+        initFireBase();
+
+    }
+
+    private void initFields(){
+        findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickOnbtnLogin();
+            }
+        });
+        findViewById(R.id.tvRegister).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickOntvRegister();
+            }
+        });
+        findViewById(R.id.tvResetPassword).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickOntvResetPassword();
+            }
+        });
         email = findViewById(R.id.etEmail);
         password = findViewById(R.id.etPassword);
-        validator = new Validator(this);
-        validator.setValidationListener(this);
-        mAuth = FirebaseAuth.getInstance();
         loadingBar = new ProgressDialog(this);
     }
 
-    @Override
-    public void onClick(View v) {
+    private void clickOnbtnLogin() {
         validator.validate();
-        if (valIsDone && v.getId() == R.id.btnLogin) {
-            loginAccount();
-        }
-        else if (v.getId() == R.id.tvRegister) {
-            registerActivity();
-        }
-        else if (v.getId() == R.id.tvResetPassword){
-            resetPasswordActivity();
+        if(valIsDone) {
+            String mail = email.getText().toString();
+            String pass = password.getText().toString();
+            loadingBar.setTitle("Login Account");
+            loadingBar.setMessage("Please wait, while we are login to your account for you...");
+            loadingBar.show();
+            mAuth.signInWithEmailAndPassword(mail, pass)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                loadingBar.dismiss();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                finish();
+                                startActivity(intent);
+                            } else {
+                                loadingBar.dismiss();
+                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
         }
     }
 
-    private void resetPasswordActivity() {
+    private void initValidator(){
+        validator = new Validator(this);
+        validator.setValidationListener(this);
+    }
+
+    private void initFireBase(){
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void clickOntvRegister() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        clearError();
+    }
+
+    private void clickOntvResetPassword() {
         Intent intent = new Intent(this, ResetPasswordActivity.class);
         startActivity(intent);
         clearError();
@@ -74,37 +120,6 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
     private void clearError() {
         email.setError(null);
         password.setError(null);
-    }
-
-    private void registerActivity() {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
-        clearError();
-    }
-
-    private void loginAccount(){
-        final String mail = email.getText().toString();
-        String pass = password.getText().toString();
-        loadingBar.setTitle("Login Account");
-        loadingBar.setMessage("Please wait, while we are login to your account for you...");
-        loadingBar.show();
-        mAuth.signInWithEmailAndPassword(mail,pass)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            loadingBar.dismiss();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            finish();
-                            startActivity(intent);
-                        }
-                        else{
-                            loadingBar.dismiss();
-                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-
     }
 
     @Override

@@ -20,15 +20,48 @@
         </include>
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/diaryFrame"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="512dp"
-        android:layout_below="@+id/appBarLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appBarLayout">
+        <TextView
+            android:id="@+id/PersonalDiaryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:hint="Personal Diary"
+            android:scaleType="fitCenter"
+            android:textAlignment="center"
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
-    </FrameLayout>
 
+        <ListView
+            android:id="@+id/PersonalDiaryListView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/PersonalDiaryText"
+            android:layout_alignParentStart="true" />
 
+        <TextView
+            android:id="@+id/GroupDiaryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/PersonalDiaryListView"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:hint="Group Diary"
+            android:textAlignment="center"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/GroupDiaryRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/GroupDiaryText"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 </RelativeLayout>

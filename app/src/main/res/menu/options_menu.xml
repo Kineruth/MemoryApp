@@ -15,7 +15,7 @@
     </item>
 
     <item
-        android:title="Ssttings"
+        android:title="Settings"
         android:id="@+id/main_setting_option"
         app:showAsAction="never">
     </item>

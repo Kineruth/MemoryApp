@@ -27,7 +27,7 @@ import com.mobsandgeeks.saripaar.annotation.Pattern;
 
 import java.util.List;
 
-public class RegisterActivity extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     @NotEmpty()
     @Email()
@@ -48,20 +48,73 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        initFields();
+        initValidator();
+        initFireBase();
+
+    }
+
+    private void initFields(){
         email = findViewById(R.id.etEmail);
         password = findViewById(R.id.etPassword);
         fullname = findViewById(R.id.etFullName);
-        findViewById(R.id.btnRegister).setOnClickListener(this);
-        validator = new Validator(this);
-        validator.setValidationListener(this);
-        mAuth = FirebaseAuth.getInstance();
-        mData = FirebaseDatabase.getInstance().getReference();
+        findViewById(R.id.btnRegister).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickOnbtnRegister();
+            }
+        });
         loadingBar = new ProgressDialog(this);
     }
 
-    @Override
-    public void onValidationSucceeded() {
-        valIsDone = true;
+    private void initValidator(){
+        validator = new Validator(this);
+        validator.setValidationListener(this);
+    }
+
+    private void initFireBase(){
+        mAuth = FirebaseAuth.getInstance();
+        mData = FirebaseDatabase.getInstance().getReference();
+    }
+
+    private void clickOnbtnRegister() {
+        validator.validate();
+        if(valIsDone){
+            String mail = email.getText().toString();
+            String pass = password.getText().toString();
+            final String name = fullname.getText().toString();
+            loadingBar.setTitle("Creating New Account");
+            loadingBar.setMessage("Please wait, while we are creating new account for you...");
+            loadingBar.show();
+            mAuth.createUserWithEmailAndPassword(mail,pass)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                User user = new User(name,mAuth.getCurrentUser().getUid());
+                                mData.child("Users")
+                                        .child(mAuth.getCurrentUser().getUid())
+                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            loadingBar.dismiss();
+                                            loginActivity();
+                                        }
+                                        else{
+                                            loadingBar.dismiss();
+                                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                            }
+                            else{
+                                loadingBar.dismiss();
+                                Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+        }
     }
 
     @Override
@@ -80,52 +133,10 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     }
 
     @Override
-    public void onClick(View v) {
-        validator.validate();
-        if (valIsDone) {
-            switch (v.getId()) {
-                case (R.id.btnRegister):
-                    createNewAccount();
-            }
-        }
+    public void onValidationSucceeded() {
+        valIsDone = true;
     }
 
-    private void createNewAccount(){
-        final String mail = email.getText().toString();
-        String pass = password.getText().toString();
-        final String name = fullname.getText().toString();
-        loadingBar.setTitle("Creating New Account");
-        loadingBar.setMessage("Please wait, while we are creating new account for you...");
-        loadingBar.show();
-        mAuth.createUserWithEmailAndPassword(mail,pass)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            User user = new User(name,mAuth.getCurrentUser().getUid());
-                            mData.child("Users")
-                                    .child(mAuth.getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        loadingBar.dismiss();
-                                        loginActivity();
-                                    }
-                                    else{
-                                        loadingBar.dismiss();
-                                        Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
-                        }
-                        else{
-                            loadingBar.dismiss();
-                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
     private void loginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
