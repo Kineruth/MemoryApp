@@ -37,11 +37,10 @@
             android:textSize="26sp"
             android:textStyle="bold" />
 
-
-        <ListView
-            android:id="@+id/PersonalDiaryListView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/PersonalDiaryRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="46dp"
             android:layout_below="@+id/PersonalDiaryText"
             android:layout_alignParentStart="true" />
 
@@ -49,7 +48,7 @@
             android:id="@+id/GroupDiaryText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/PersonalDiaryListView"
+            android:layout_below="@+id/PersonalDiaryRecyclerView"
             android:layout_alignParentStart="true"
             android:layout_centerHorizontal="true"
             android:hint="Group Diary"

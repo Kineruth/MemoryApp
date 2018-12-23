@@ -101,10 +101,10 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                userName.setText(user.name);
-                userStatus.setText(user.status);
-                if(!user.image.equals(""))
-                    Picasso.get().load(user.image).into(userProfileImage);
+                userName.setText(user.getName());
+                userStatus.setText(user.getStatus());
+                if(!user.getImage().equals(""))
+                    Picasso.get().load(user.getImage()).into(userProfileImage);
 
             }
 
@@ -128,7 +128,7 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
             mData.child("Users").child(mAuth.getCurrentUser().getUid()).child("image").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    user.image = dataSnapshot.getValue(String.class);
+                    user.setImage(dataSnapshot.getValue(String.class));
                     mData.child("Users")
                             .child(uid)
                             .setValue(user)

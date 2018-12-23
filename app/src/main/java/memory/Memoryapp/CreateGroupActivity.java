@@ -107,7 +107,7 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                UserDataHolder.getUserDataHolder().getUser().groupId.add(key);
+                                UserDataHolder.getUserDataHolder().getUser().getGroupId().add(key);
                                 mData.child("Users").child(mAuth.getCurrentUser().getUid())
                                         .setValue(UserDataHolder.getUserDataHolder().getUser())
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     Group group = data.getValue(Group.class);
-                    if(UserDataHolder.getUserDataHolder().getUser().groupId.contains(group.uid))
+                    if(UserDataHolder.getUserDataHolder().getUser().getGroupId().contains(group.getUid()))
                         groupList.add(group);
                 }
                 adapter.notifyDataSetChanged();

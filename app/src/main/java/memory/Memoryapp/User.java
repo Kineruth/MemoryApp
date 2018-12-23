@@ -7,8 +7,8 @@ import java.util.List;
 
 public class User {
 
-    public String image, name, status, uid;
-    public List<String> groupId = new ArrayList<>();
+    private String image = "", name, status = "", uid;
+    private List<String> groupId = new ArrayList<>();
 
     public User() {
     }
@@ -16,8 +16,6 @@ public class User {
     public User(String fullName ,String uid) {
         this.name = fullName;
         this.uid = uid;
-        this.status = "";
-        this.image = "";
     }
 
     public User(String fullName, String status , String uid, String image) {
@@ -31,7 +29,6 @@ public class User {
         this.name = fullName;
         this.status = status;
         this.uid = uid;
-        this.image = "";
     }
 
     public void setAll(User user){
@@ -40,5 +37,45 @@ public class User {
         this.uid = user.uid;
         this.image = user.image;
         this.groupId.addAll(user.groupId);
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public List<String> getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(List<String> groupId) {
+        this.groupId = groupId;
     }
 }
