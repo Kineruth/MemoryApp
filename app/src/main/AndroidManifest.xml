@@ -23,7 +23,6 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".RestartPasswordActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".CreateGroupActivity" />
@@ -31,6 +30,6 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".GroupDiaryActivity"></activity>
-    </application>
+        </application>
 
 </manifest>
