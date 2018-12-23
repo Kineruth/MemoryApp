@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -18,13 +19,12 @@
                 android:layout_height="50dp"
                 android:id="@+id/relLayout1">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:id="@+id/profile_photo"
+                    android:id="@+id/profile_iv"
+                    android:src="@drawable/profile_image"
                     android:layout_marginTop="20dp"
-                    app:civ_border_color="@color/black"
-                    app:civ_border_width="0.5dp"
                     android:layout_marginLeft="25dp"
                     android:layout_centerVertical="true"/>
 
@@ -33,40 +33,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="mitch.tabian"
-                    android:layout_toRightOf="@+id/profile_photo"
+                    android:text="Dvir Barzilay"
+                    android:layout_toRightOf="@+id/profile_iv"
                     android:layout_marginLeft="10dp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/username"
+                    android:id="@+id/username_tv"
                     android:textColor="@color/black"
                     />
 
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/profile_image"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    android:id="@+id/ivProfile"/>
-
             </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/post_image"
-                android:layout_below="@id/relLayout1"
-                android:scaleType="centerCrop"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/relLayout2"
-                android:layout_below="@+id/post_image"
+                android:layout_below="@+id/relLayout1"
                 android:background="@color/white">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/post_image"
+                    android:src = "@drawable/memory_image"
+                    android:scaleType="centerCrop"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -74,8 +63,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/relLayout3"
                 android:layout_below="@+id/relLayout2"
-                android:padding="20dp"
-                android:layout_marginBottom="50dp"
+                android:padding="10dp"
                 android:background="@color/white">
 
 
@@ -85,8 +73,8 @@
                     android:text="mitch.tabian moutains #earthporn #mountains"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:id="@+id/image_caption"
-                    android:layout_marginTop="15dp"/>
+                    android:id="@+id/memory_description_tv"
+                    android:layout_marginTop="10dp"/>
 
 
                 <TextView
@@ -94,9 +82,9 @@
                     android:layout_height="wrap_content"
                     android:text="3 DAYS AGO"
                     android:textColor="@color/grey"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/image_caption"
-                    android:id="@+id/image_time_posted"
+                    android:textSize="12sp"
+                    android:layout_below="@+id/memory_description_tv"
+                    android:id="@+id/memory_time_posted_tv"
                     android:layout_marginTop="15dp"/>
 
             </RelativeLayout>
