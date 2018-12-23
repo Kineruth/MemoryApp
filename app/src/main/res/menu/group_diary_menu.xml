@@ -10,8 +10,16 @@
 
     <item
         android:title="Add Memory"
-        android:id="@+id/add_memory_option"
+        android:id="@+id/add_group_memory_option"
         app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/group_diary_search"
+        android:icon="@drawable/search"
+        android:title="Search"
+        app:showAsAction="ifRoom|collapseActionView">
     </item>
 
 </menu>
+
+
