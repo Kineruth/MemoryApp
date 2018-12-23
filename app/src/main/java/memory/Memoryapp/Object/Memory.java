@@ -1,4 +1,4 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Object;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Adapter;
 
 
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -16,14 +15,18 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import memory.Memoryapp.Holder.GroupDiaryDataHolder;
+import memory.Memoryapp.Activity.GroupDiaryActivity;
+import memory.Memoryapp.Object.GroupDiary;
+import memory.Memoryapp.R;
 
-public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHolder> {
+public class GroupDiaryAdapter extends RecyclerView.Adapter<GroupDiaryAdapter.GroupViewHolder> {
     private Context mContext;
-    private List<Group> groupList;
+    private List<GroupDiary> groupDiaryList;
 
-    public GroupAdapter(Context mContext, List<Group> groupList) {
+    public GroupDiaryAdapter(Context mContext, List<GroupDiary> groupDiaryList) {
         this.mContext = mContext;
-        this.groupList = groupList;
+        this.groupDiaryList = groupDiaryList;
     }
 
 
@@ -38,14 +41,14 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder groupViewHolder, int i) {
-        final Group group = groupList.get(i);
-        groupViewHolder.groupName.setText(group.getName());
-        if(!group.getImage().isEmpty())
-            Picasso.get().load(group.getImage()).into(groupViewHolder.groupImage);
+        final GroupDiary groupDiary = groupDiaryList.get(i);
+        groupViewHolder.groupName.setText(groupDiary.getName());
+        if(!groupDiary.getImage().isEmpty())
+            Picasso.get().load(groupDiary.getImage()).into(groupViewHolder.groupImage);
         groupViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GroupDataHolder.getGroupDataHolder().getGroup().setAll(group);
+                GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary().setAll(groupDiary);
                 Intent intent = new Intent(mContext, GroupDiaryActivity.class);
                 mContext.startActivity(intent);
             }
@@ -54,7 +57,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
     @Override
     public int getItemCount() {
-        return groupList.size();
+        return groupDiaryList.size();
     }
 
     public class GroupViewHolder extends RecyclerView.ViewHolder {

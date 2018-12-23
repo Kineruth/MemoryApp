@@ -1,4 +1,4 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,14 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -33,6 +29,9 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import memory.Memoryapp.Holder.UserDataHolder;
+import memory.Memoryapp.Object.GroupDiary;
+import memory.Memoryapp.R;
 
 public class CreateGroupActivity extends AppCompatActivity implements Validator.ValidationListener {
 
@@ -86,7 +85,7 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
     private void initFireBase(){
         mAuth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
-        groupImageRef = FirebaseStorage.getInstance().getReference().child("Group Images");
+        groupImageRef = FirebaseStorage.getInstance().getReference().child("GroupDiary Images");
         key = mData.child("Groups").push().getKey();
 
     }
@@ -94,15 +93,15 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
     private void clickOnCreateGroupButton(){
         validator.validate();
         if(valIsDone){
-            loadingBar.setTitle("Create Group");
-            loadingBar.setMessage("Please wait, while we are create your new group for you...");
+            loadingBar.setTitle("Create GroupDiary");
+            loadingBar.setMessage("Please wait, while we are create your new groupDiary for you...");
             loadingBar.show();
-            Group group;
+            GroupDiary groupDiary;
             if(imageUrl == null)
-                group= new Group(groupName.getText().toString(), "", key, mAuth.getCurrentUser().getUid());
+                groupDiary = new GroupDiary(groupName.getText().toString(), "", key, mAuth.getCurrentUser().getUid());
             else
-                group= new Group(groupName.getText().toString(), imageUrl.toString(), key, mAuth.getCurrentUser().getUid());
-            mData.child("Groups").child(key).setValue(group)
+                groupDiary = new GroupDiary(groupName.getText().toString(), imageUrl.toString(), key, mAuth.getCurrentUser().getUid());
+            mData.child("Group Diary").child(key).setValue(groupDiary)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -170,8 +169,8 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if(resultCode == RESULT_OK){
-                loadingBar.setTitle("Set Group Image");
-                loadingBar.setMessage("Please wait, while your Group image is uploading...");
+                loadingBar.setTitle("Set GroupDiary Image");
+                loadingBar.setMessage("Please wait, while your GroupDiary image is uploading...");
                 loadingBar.setCanceledOnTouchOutside(false);
                 loadingBar.show();
                 imageUrl = result.getUri();

@@ -1,4 +1,4 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -13,7 +13,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -21,6 +20,8 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
+
+import memory.Memoryapp.R;
 
 public class LoginActivity extends Activity implements Validator.ValidationListener {
 

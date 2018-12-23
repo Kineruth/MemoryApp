@@ -1,6 +1,4 @@
-package memory.Memoryapp;
-
-import android.icu.lang.UScript;
+package memory.Memoryapp.Object;
 
 import java.util.ArrayList;
 import java.util.List;

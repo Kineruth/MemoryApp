@@ -1,4 +1,4 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,14 +10,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -26,6 +24,10 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Pattern;
 
 import java.util.List;
+
+import memory.Memoryapp.Object.PersonalDiary;
+import memory.Memoryapp.Object.User;
+import memory.Memoryapp.R;
 
 public class RegisterActivity extends AppCompatActivity implements Validator.ValidationListener {
 
@@ -96,10 +98,24 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                                         .child(mAuth.getCurrentUser().getUid())
                                         .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                                    public void onComplete(@NonNull final Task<Void> task) {
                                         if(task.isSuccessful()){
-                                            loadingBar.dismiss();
-                                            loginActivity();
+                                           mData.child("Personal Diary")
+                                                   .child(mAuth.getCurrentUser().getUid())
+                                                   .setValue(new PersonalDiary("My Diary", "", mData.child("Personal Diary").push().getKey()))
+                                                   .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                       @Override
+                                                       public void onSuccess(Void aVoid) {
+                                                           if(task.isSuccessful()){
+                                                               loadingBar.dismiss();
+                                                               loginActivity();
+                                                           }
+                                                           else {
+                                                               loadingBar.dismiss();
+                                                               Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                                           }
+                                                       }
+                                                   });
                                         }
                                         else{
                                             loadingBar.dismiss();
@@ -114,6 +130,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                             }
                         }
                     });
+
         }
     }
 

@@ -1,4 +1,6 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Holder;
+
+import memory.Memoryapp.Object.User;
 
 public class UserDataHolder {
 

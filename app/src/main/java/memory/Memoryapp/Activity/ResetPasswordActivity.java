@@ -1,4 +1,4 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.util.List;
+
+import memory.Memoryapp.R;
 
 public class ResetPasswordActivity extends AppCompatActivity implements Validator.ValidationListener {
 

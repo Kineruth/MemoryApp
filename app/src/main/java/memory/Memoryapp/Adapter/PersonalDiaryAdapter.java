@@ -1,4 +1,4 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,15 +11,21 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import memory.Memoryapp.Activity.PersonalDiaryActivity;
+import memory.Memoryapp.Holder.PersonalDiaryDataHolder;
+import memory.Memoryapp.Object.PersonalDiary;
+import memory.Memoryapp.R;
 
-public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.PersonalViewHolder> {
+public class PersonalDiaryAdapter extends RecyclerView.Adapter<PersonalDiaryAdapter.PersonalViewHolder> {
     private Context mContext;
-    private Personal personal;
+    private List<PersonalDiary> personalDiaryList;
 
-    public PersonalAdapter(Context mContext, Personal personal) {
+    public PersonalDiaryAdapter(Context mContext, List<PersonalDiary> personalDiaryList) {
         this.mContext = mContext;
-        this.personal = personal;
+        this.personalDiaryList = personalDiaryList;
     }
 
     @NonNull
@@ -33,14 +39,15 @@ public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.Person
 
     @Override
     public void onBindViewHolder(@NonNull PersonalViewHolder personalViewHolder, int i) {
-        final Personal personal = this.personal;
-        personalViewHolder.personalName.setText(personal.getName());
-        if(!personal.getImage().isEmpty())
-            Picasso.get().load(personal.getImage()).into(personalViewHolder.personalImage);
+        final PersonalDiary personalDiary = this.personalDiaryList.get(i);
+        personalViewHolder.personalName.setText(personalDiary.getName());
+        if(!personalDiary.getImage().isEmpty())
+            Picasso.get().load(personalDiary.getImage()).into(personalViewHolder.personalImage);
         personalViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, GroupDiaryActivity.class);
+                PersonalDiaryDataHolder.getPersonalDiaryDataHolder().getPersonalDiary().setAll(personalDiary);
+                Intent intent = new Intent(mContext, PersonalDiaryActivity.class);
                 mContext.startActivity(intent);
             }
         });
@@ -48,7 +55,7 @@ public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.Person
 
     @Override
     public int getItemCount() {
-        return 1;
+        return personalDiaryList.size();
     }
 
     public class PersonalViewHolder extends RecyclerView.ViewHolder{

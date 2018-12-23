@@ -1,22 +1,14 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,11 +16,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
+import memory.Memoryapp.Adapter.GroupDiaryAdapter;
+import memory.Memoryapp.Adapter.PersonalDiaryAdapter;
+import memory.Memoryapp.Holder.UserDataHolder;
+import memory.Memoryapp.Object.GroupDiary;
+import memory.Memoryapp.Object.PersonalDiary;
+import memory.Memoryapp.Object.User;
+import memory.Memoryapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mData;
     private RecyclerView groupRecyclerView;
-    private GroupAdapter adapter;
-    private List<Group> groupList;
+    private RecyclerView personalRecyclerView;
+    private PersonalDiaryAdapter personalDiaryAdapter;
+    private GroupDiaryAdapter groupDiaryAdapter;
+    private List<GroupDiary> groupDiaryList;
+    private List<PersonalDiary> personalDiaryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +52,23 @@ public class MainActivity extends AppCompatActivity {
     private void initFields(){
         mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
-        groupList = new ArrayList<>();
+        groupDiaryList = new ArrayList<>();
+        personalDiaryList = new ArrayList<>();
         groupRecyclerView = findViewById(R.id.GroupDiaryRecyclerView);
         groupRecyclerView.setHasFixedSize(true);
         groupRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new GroupAdapter(this, groupList);
-        groupRecyclerView.setAdapter(adapter);
+        personalRecyclerView = findViewById(R.id.PersonalDiaryRecyclerView);
+        personalRecyclerView.setHasFixedSize(true);
+        personalRecyclerView.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        groupDiaryAdapter = new GroupDiaryAdapter(this, groupDiaryList);
+        groupRecyclerView.setAdapter(groupDiaryAdapter);
+        personalDiaryAdapter = new PersonalDiaryAdapter(this, personalDiaryList);
+        personalRecyclerView.setAdapter(personalDiaryAdapter);
     }
 
     private void initFireBase(){
@@ -81,16 +93,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        groupList.clear();
-        mData.child("Groups").addValueEventListener(new ValueEventListener() {
+        groupDiaryList.clear();
+        mData.child("Group Diary").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
-                    Group group = data.getValue(Group.class);
-                    if(UserDataHolder.getUserDataHolder().getUser().getGroupId().contains(group.getUid()))
-                        groupList.add(group);
+                    GroupDiary groupDiary = data.getValue(GroupDiary.class);
+                    if(UserDataHolder.getUserDataHolder().getUser().getGroupId().contains(groupDiary.getUid()))
+                        groupDiaryList.add(groupDiary);
                 }
-                adapter.notifyDataSetChanged();
+                groupDiaryAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        personalDiaryList.clear();
+        mData.child("Personal Diary").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                PersonalDiary personalDiary = dataSnapshot.getValue(PersonalDiary.class);
+                personalDiaryList.add(personalDiary);
+                personalDiaryAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -116,14 +142,9 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.main_setting_option){
             settingsActivity();
         }
-        if(item.getItemId() == R.id.main_create_group_option){
+        if(item.getItemId() == R.id.main_create_group_option) {
             createGroupActivity();
-
         }
-        if(item.getItemId() == R.id.main_find_friends_option){
-
-        }
-
         return true;
     }
 

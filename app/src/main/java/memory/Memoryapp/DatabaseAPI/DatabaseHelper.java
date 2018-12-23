@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import memory.Memoryapp.Memory;
+import memory.Memoryapp.Object.Memory;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     //database

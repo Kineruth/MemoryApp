@@ -1,15 +1,21 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Object;
 
-public class Personal {
-    private String name, image, uid;
+public abstract class Diary {
+    protected String name, image, uid;
 
-    public Personal() {
+    public Diary(){
     }
 
-    public Personal(String name, String image, String uid) {
+    public Diary(String name, String image, String uid) {
         this.name = name;
         this.image = image;
         this.uid = uid;
+    }
+
+    public Diary(Diary d){
+        this.name = d.name;
+        this.image = d.image;
+        this.uid = d.uid;
     }
 
     public String getName() {
@@ -36,9 +42,9 @@ public class Personal {
         this.uid = uid;
     }
 
-    public void setAll(Personal p){
-        this.name = p.name;
-        this.image = p.image;
-        this.uid = p.uid;
+    public void setAll(Diary d){
+        this.name = d.name;
+        this.image = d.image;
+        this.uid = d.uid;
     }
 }
