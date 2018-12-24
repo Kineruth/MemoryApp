@@ -1,26 +1,33 @@
 package memory.Memoryapp.Object;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 public class Memory {
     private int memoryID;
+    private String userID;
     private String memoryName;
     private String description;
     private Date creationTime;
-    private String imagesPath;
+    private ArrayList<String> images;
 
-    public Memory(int memoryID, String memoryName, String description, long creationTime, String imagesPath){
+    public Memory(int memoryID, String userID, String memoryName, String description, long creationTime, ArrayList<String> images){
         this.memoryID = memoryID;
+        this.userID = userID;
         this.memoryName = memoryName;
         this.description = description;
         this.creationTime = new Date();
         this.creationTime.setTime(creationTime);
-        this.imagesPath = imagesPath;
+        this.images = images;
     }
 
     public int getMemoryID() {
         return memoryID;
     }
+
+    public String getUserID(){ return userID; }
+
+    public void setUserID(String userID){ this.userID = userID; }
 
     public String getMemoryName() {
         return memoryName;
@@ -46,11 +53,11 @@ public class Memory {
         this.creationTime = creationTime;
     }
 
-    public String getImagesPath() {
-        return imagesPath;
+    public ArrayList<String> getImages() {
+        return images;
     }
 
-    public void setImagesPath(String imagesPath) {
-        this.imagesPath = imagesPath;
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
     }
 }

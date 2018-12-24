@@ -8,8 +8,7 @@ public class User {
     private String image = "", name, status = "", uid;
     private List<String> groupId = new ArrayList<>();
 
-    public User() {
-    }
+    public User() { }
 
     public User(String fullName ,String uid) {
         this.name = fullName;
