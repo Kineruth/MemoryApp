@@ -96,7 +96,7 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
     }
 
     private void initSettings() {
-        mData.child("Users").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        mData.child("Users").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -124,7 +124,7 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
             String setStatus = userStatus.getText().toString();
             final String uid = mAuth.getCurrentUser().getUid();
             final User user = new User(setName, setStatus, uid);
-            mData.child("Users").child(mAuth.getCurrentUser().getUid()).child("image").addValueEventListener(new ValueEventListener() {
+            mData.child("Users").child(mAuth.getCurrentUser().getUid()).child("image").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     user.setImage(dataSnapshot.getValue(String.class));

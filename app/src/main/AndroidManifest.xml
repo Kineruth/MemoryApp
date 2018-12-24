@@ -32,7 +32,7 @@
         <activity android:name=".Activity.GroupDiary.GroupDiaryActivity" />
         <activity android:name=".Activity.PersonalDiary.PersonalDiaryActivity" />
         <activity android:name=".Activity.GroupDiary.AddMemberActivity" />
-        <activity android:name=".Activity.ProfileActivity"></activity>
+        <activity android:name=".Activity.GroupDiary.ProfileActivity"></activity>
     </application>
 
 </manifest>
