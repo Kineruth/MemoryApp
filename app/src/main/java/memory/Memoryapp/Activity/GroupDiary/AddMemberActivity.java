@@ -5,6 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +29,7 @@ import memory.Memoryapp.Object.User;
 import memory.Memoryapp.R;
 
 
-public class AddMemberActivity extends AppCompatActivity {
+public class AddMemberActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     private android.support.v7.widget.Toolbar mToolbar;
     private RecyclerView addMemberRecyclerView;
@@ -37,6 +43,12 @@ public class AddMemberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_member);
         initFireBase();
         initFields();
+        initRecyclerView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initRecyclerView();
     }
 
@@ -55,11 +67,21 @@ public class AddMemberActivity extends AppCompatActivity {
         addMemberRecyclerView.setAdapter(userAdapter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.add_member_menu,menu);
+        MenuItem menuItem = menu.findItem(R.id.search_member);
+        SearchView searchView = (SearchView)menuItem.getActionView();
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
     private void initRecyclerView() {
-        userList.clear();
-        mData.child("Users").addValueEventListener(new ValueEventListener() {
+        mData.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()){
                     User user = data.getValue(User.class);
                     if(!GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary().getGroupMember().contains(user.getUid()))
@@ -73,5 +95,16 @@ public class AddMemberActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        userAdapter.filterList(s);
+        return true;
     }
 }

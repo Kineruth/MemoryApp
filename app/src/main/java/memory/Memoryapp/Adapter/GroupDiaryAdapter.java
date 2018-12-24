@@ -29,7 +29,6 @@ public class GroupDiaryAdapter extends RecyclerView.Adapter<GroupDiaryAdapter.Gr
         this.groupDiaryList = groupDiaryList;
     }
 
-
     @NonNull
     @Override
     public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

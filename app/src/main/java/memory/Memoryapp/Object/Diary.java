@@ -47,4 +47,9 @@ public abstract class Diary {
         this.image = d.image;
         this.uid = d.uid;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.uid == ((Diary)obj).uid;
+    }
 }

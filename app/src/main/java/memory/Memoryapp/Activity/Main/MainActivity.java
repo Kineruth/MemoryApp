@@ -2,6 +2,7 @@ package memory.Memoryapp.Activity.Main;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         initUser();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initRecyclerView();
+    }
+
     private void initFields(){
         mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
@@ -78,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUser() {
-        mData.child("Users").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        mData.child("Users").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User userTemp = dataSnapshot.getValue(User.class);
@@ -94,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        groupDiaryList.clear();
         mData.child("Group Diary").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                groupDiaryList.clear();
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     GroupDiary groupDiary = data.getValue(GroupDiary.class);
                     if(UserDataHolder.getUserDataHolder().getUser().getGroupId().contains(groupDiary.getUid()))
@@ -111,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        personalDiaryList.clear();
-        mData.child("Personal Diary").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        mData.child("Personal Diary").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                personalDiaryList.clear();
                 PersonalDiary personalDiary = dataSnapshot.getValue(PersonalDiary.class);
                 personalDiaryList.add(personalDiary);
                 personalDiaryAdapter.notifyDataSetChanged();

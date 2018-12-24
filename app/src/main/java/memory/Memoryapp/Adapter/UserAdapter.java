@@ -14,7 +14,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import memory.Memoryapp.Activity.ProfileActivity;
+import memory.Memoryapp.Activity.Filter.MemberFilter;
+import memory.Memoryapp.Activity.GroupDiary.ProfileActivity;
 import memory.Memoryapp.Holder.ProfileDataHolder;
 import memory.Memoryapp.Object.User;
 import memory.Memoryapp.R;
@@ -23,10 +24,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     private Context mContext;
     private List<User> userList;
+    private List<User> filterUserList;
+    private MemberFilter filter;
 
     public UserAdapter(Context mContext, List<User> groupDiaryList) {
         this.mContext = mContext;
         this.userList = groupDiaryList;
+        this.filterUserList = groupDiaryList;
+        filter = new MemberFilter(this.userList, this);
     }
 
     @NonNull
@@ -54,9 +59,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         });
     }
 
+    public void setList(List<User> list){
+        this.filterUserList = list;
+    }
+
+    public void filterList(String text){
+        filter.filter(text);
+    }
+
     @Override
     public int getItemCount() {
-        return userList.size();
+        return filterUserList.size();
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder{
