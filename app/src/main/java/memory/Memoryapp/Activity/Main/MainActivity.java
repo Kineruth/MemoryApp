@@ -1,4 +1,4 @@
-package memory.Memoryapp.Activity;
+package memory.Memoryapp.Activity.Main;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import memory.Memoryapp.Activity.Start.LoginActivity;
 import memory.Memoryapp.Adapter.GroupDiaryAdapter;
 import memory.Memoryapp.Adapter.PersonalDiaryAdapter;
 import memory.Memoryapp.Holder.UserDataHolder;

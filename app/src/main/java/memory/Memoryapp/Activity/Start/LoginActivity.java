@@ -1,4 +1,4 @@
-package memory.Memoryapp.Activity;
+package memory.Memoryapp.Activity.Start;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -21,6 +21,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
 
+import memory.Memoryapp.Activity.Main.MainActivity;
 import memory.Memoryapp.R;
 
 public class LoginActivity extends Activity implements Validator.ValidationListener {

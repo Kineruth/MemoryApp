@@ -1,4 +1,4 @@
-package memory.Memoryapp.Activity;
+package memory.Memoryapp.Activity.Start;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import memory.Memoryapp.Activity.Main.MainActivity;
 import memory.Memoryapp.R;
 
 public class WelcomeActivity extends AppCompatActivity {

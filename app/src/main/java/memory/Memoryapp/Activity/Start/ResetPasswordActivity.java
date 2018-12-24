@@ -1,4 +1,4 @@
-package memory.Memoryapp.Activity;
+package memory.Memoryapp.Activity.Start;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

@@ -16,7 +16,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import memory.Memoryapp.Holder.GroupDiaryDataHolder;
-import memory.Memoryapp.Activity.GroupDiaryActivity;
+import memory.Memoryapp.Activity.GroupDiary.GroupDiaryActivity;
 import memory.Memoryapp.Object.GroupDiary;
 import memory.Memoryapp.R;
 

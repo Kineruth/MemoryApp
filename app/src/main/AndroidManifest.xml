@@ -13,24 +13,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.WelcomeActivity">
+        <activity android:name=".Activity.Start.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.RegisterActivity" />
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.ResetPasswordActivity" />
-        <activity android:name=".Activity.SettingsActivity" />
-        <activity android:name=".Activity.CreateGroupActivity" />
+        <activity android:name=".Activity.Start.LoginActivity" />
+        <activity android:name=".Activity.Start.RegisterActivity" />
+        <activity android:name=".Activity.Main.MainActivity" />
+        <activity android:name=".Activity.Start.ResetPasswordActivity" />
+        <activity android:name=".Activity.Main.SettingsActivity" />
+        <activity android:name=".Activity.Main.CreateGroupActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".Activity.GroupDiaryActivity" />
-        <activity android:name=".Activity.PersonalDiaryActivity"></activity>
+        <activity android:name=".Activity.GroupDiary.GroupDiaryActivity" />
+        <activity android:name=".Activity.PersonalDiary.PersonalDiaryActivity" />
+        <activity android:name=".Activity.GroupDiary.AddMemberActivity" />
+        <activity android:name=".Activity.ProfileActivity"></activity>
     </application>
 
 </manifest>

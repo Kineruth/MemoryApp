@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context="memory.Memoryapp.Activity.GroupDiaryActivity">
+    tools:context="memory.Memoryapp.Activity.GroupDiary.GroupDiaryActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/groupBarLayout"
@@ -16,6 +16,20 @@
             android:id="@+id/group_diary_toolbar"
             layout="@layout/app_bar_layout">
         </include>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/group_diary_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/group_tabs_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/groupBarLayout">
+    </android.support.v4.view.ViewPager>
 
 </RelativeLayout>

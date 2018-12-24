@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context="memory.Memoryapp.Activity.PersonalDiaryActivity">
+    tools:context="memory.Memoryapp.Activity.PersonalDiary.PersonalDiaryActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/personalBarLayout"
