@@ -18,15 +18,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //table
     private static final String TABLE_NAME = "PersonalMemories";
     private static final String MEMORY_ID_COLNAME = "memoryID";
+    private static final String USER_ID_COLNAME = "userName";
     private static final String MEMORY_NAME_COLNAME = "memoryName";
     private static final String DESCRIPTION_COLNAME = "description";
     private static final String CREATION_DATE_COLNAME = "date";
-    private static final String IMAGES_PATH_COLNAME = "imagesPath";
     private static final int MEMORY_ID_COL = 0;
-    private static final int MEMORY_NAME_COL = 1;
-    private static final int DESCRIPTION_COL = 2;
-    private static final int CREATION_DATE_COL = 3;
-    private static final int IMAGES_PATH_COL = 4;
+    private static final int USER_ID_COL = 1;
+    private static final int MEMORY_NAME_COL = 2;
+    private static final int DESCRIPTION_COL = 3;
+    private static final int CREATION_DATE_COL = 4;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VER);
@@ -42,10 +42,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + MEMORY_ID_COLNAME + " INTEGER PRIMARY KEY,"
+                + USER_ID_COLNAME + " TEXT, "
                 + MEMORY_NAME_COLNAME + " TEXT, "
                 + DESCRIPTION_COLNAME + " TEXT, "
                 + CREATION_DATE_COLNAME + " INTEGER, "
-                + IMAGES_PATH_COLNAME + " TEXT);";
+                + "image_1 TEXT, "
+                + "image_2 TEXT, "
+                + "image_3 TEXT, "
+                + "image_4 TEXT, "
+                + "image_5 TEXT, "
+                + "image_6 TEXT, "
+                + "image_7 TEXT, "
+                + "image_8 TEXT, "
+                + "image_9 TEXT, "
+                + "image_10 TEXT);";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -83,10 +93,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(MEMORY_ID_COLNAME, memory.getMemoryID());
+        contentValues.put(USER_ID_COLNAME, memory.getUserID());
         contentValues.put(MEMORY_NAME_COLNAME, memory.getMemoryName());
         contentValues.put(DESCRIPTION_COLNAME, memory.getDescription());
         contentValues.put(CREATION_DATE_COLNAME, memory.getCreationTime().getTime());
-        contentValues.put(IMAGES_PATH_COLNAME, memory.getImagesPath());
+        contentValues.put("image_1", memory.getImages().get(0));
+        contentValues.put("image_2", memory.getImages().get(1));
+        contentValues.put("image_3", memory.getImages().get(2));
+        contentValues.put("image_4", memory.getImages().get(3));
+        contentValues.put("image_5", memory.getImages().get(4));
+        contentValues.put("image_6", memory.getImages().get(5));
+        contentValues.put("image_7", memory.getImages().get(6));
+        contentValues.put("image_8", memory.getImages().get(7));
+        contentValues.put("image_9", memory.getImages().get(8));
+        contentValues.put("image_10", memory.getImages().get(9));
 
         if(db.insert(TABLE_NAME, null, contentValues) < 0){
             return false;
@@ -104,11 +124,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Memory> result = null;
         Cursor res = db.rawQuery("SELECT * FROM TABLE_NAME", null);
         while(res.moveToNext()){
+
+            ArrayList<String> images = new ArrayList<String>();
+            images.add(res.getString(5));
+            images.add(res.getString(6));
+            images.add(res.getString(7));
+            images.add(res.getString(8));
+            images.add(res.getString(9));
+            images.add(res.getString(10));
+            images.add(res.getString(11));
+            images.add(res.getString(12));
+            images.add(res.getString(13));
+            images.add(res.getString(14));
             result.add(new Memory(res.getInt(MEMORY_ID_COL),
+                    res.getString(USER_ID_COL),
                     res.getString(MEMORY_NAME_COL),
                     res.getString(DESCRIPTION_COL),
                     res.getLong(CREATION_DATE_COL),
-                    res.getString(IMAGES_PATH_COL)));
+                    images));
         }
         res.close();
         return result;
