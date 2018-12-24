@@ -1,4 +1,4 @@
-package memory.Memoryapp;
+package memory.Memoryapp.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +22,9 @@ import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import memory.Memoryapp.DatabaseAPI.ViewPagerAdapter;
+import memory.Memoryapp.Object.Memory;
+import memory.Memoryapp.Object.User;
+import memory.Memoryapp.R;
 
 public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryViewHolder>{
     private Context mContext;
@@ -55,9 +57,9 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                memoryViewHolder.userName.setText(user.name);
-                if (!user.image.isEmpty())
-                    Picasso.get().load(user.image).into(memoryViewHolder.profileImage);
+                memoryViewHolder.userName.setText(user.getImage());
+                if (!user.getImage().isEmpty())
+                    Picasso.get().load(user.getImage()).into(memoryViewHolder.profileImage);
             }
 
             @Override
