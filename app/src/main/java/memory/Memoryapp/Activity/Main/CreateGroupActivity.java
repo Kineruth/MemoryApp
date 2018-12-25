@@ -22,6 +22,8 @@ import com.google.firebase.storage.UploadTask;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.sangcomz.fishbun.FishBun;
+import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -150,10 +152,10 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
     }
 
     private void clickOnset_group_image() {
-        Intent galleryIntent = new Intent();
-        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent, GalleryPick);
+        FishBun.with(this).setImageAdapter(new GlideAdapter())
+                .setMinCount(1)
+                .setMaxCount(1)
+                .startAlbum();
     }
 
     @Override
@@ -161,9 +163,7 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == GalleryPick && resultCode == RESULT_OK && data != null){
             Uri imageUri = data.getData();
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
+            CropImage.activity(imageUri)
                     .start(this);
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
