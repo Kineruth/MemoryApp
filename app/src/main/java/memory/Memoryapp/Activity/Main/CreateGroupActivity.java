@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +25,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter;
+import com.sangcomz.fishbun.define.Define;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -98,56 +100,54 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
             loadingBar.setTitle("Create GroupDiary");
             loadingBar.setMessage("Please wait, while we are create your new groupDiary for you...");
             loadingBar.show();
-            GroupDiary groupDiary;
-            if(imageUrl == null)
-                groupDiary = new GroupDiary(groupName.getText().toString(), "", key, mAuth.getCurrentUser().getUid());
-            else
-                groupDiary = new GroupDiary(groupName.getText().toString(), imageUrl.toString(), key, mAuth.getCurrentUser().getUid());
-            mData.child("Group Diary").child(key).setValue(groupDiary)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                UserDataHolder.getUserDataHolder().getUser().getGroupId().add(key);
-                                mData.child("Users").child(mAuth.getCurrentUser().getUid())
-                                        .setValue(UserDataHolder.getUserDataHolder().getUser())
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful()) {
-                                                    if (imageUrl != null) {
-                                                        StorageReference filePath = groupImageRef.child(key + ".jpg");
-                                                        filePath.putFile(imageUrl).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    loadingBar.dismiss();
-                                                                    finish();
-                                                                } else {
-                                                                    loadingBar.dismiss();
-                                                                    Toast.makeText(CreateGroupActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }
-                                                        });
+            final GroupDiary groupDiary = new GroupDiary(groupName.getText().toString(), "", key, mAuth.getCurrentUser().getUid());
+            if(imageUrl != null) {
+                final StorageReference filePath = groupImageRef.child(key + ".jpg");
+                filePath.putFile(imageUrl).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    groupDiary.setImage(uri.toString());
+                                    mData.child("Group Diary").child(key).setValue(groupDiary)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        UserDataHolder.getUserDataHolder().getUser().getGroupId().add(key);
+                                                        mData.child("Users").child(mAuth.getCurrentUser().getUid())
+                                                                .setValue(UserDataHolder.getUserDataHolder().getUser())
+                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if(task.isSuccessful()) {
+                                                                            loadingBar.dismiss();
+                                                                            finish();
+                                                                        }
+                                                                        else {
+                                                                            loadingBar.dismiss();
+                                                                            Toast.makeText(CreateGroupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                                                        }
+                                                                    }
+                                                                });
                                                     }
-                                                    else{
+                                                    else {
                                                         loadingBar.dismiss();
-                                                        finish();
+                                                        Toast.makeText(CreateGroupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                                     }
                                                 }
-                                                else {
-                                                    loadingBar.dismiss();
-                                                    Toast.makeText(CreateGroupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                                }
-                                            }
-                                        });
-                            }
-                            else {
-                                loadingBar.dismiss();
-                                Toast.makeText(CreateGroupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
+                                            });
+                                }
+                            });
+                        } else {
+                            loadingBar.dismiss();
+                            Toast.makeText(CreateGroupActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }
+                });
+            }
         }
     }
 
@@ -161,18 +161,14 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GalleryPick && resultCode == RESULT_OK && data != null){
-            Uri imageUri = data.getData();
+        if(requestCode == Define.ALBUM_REQUEST_CODE && resultCode == RESULT_OK && data != null){
+            Uri imageUri = (Uri)data.getParcelableArrayListExtra(Define.INTENT_PATH).get(0);
             CropImage.activity(imageUri)
                     .start(this);
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if(resultCode == RESULT_OK){
-                loadingBar.setTitle("Set GroupDiary Image");
-                loadingBar.setMessage("Please wait, while your GroupDiary image is uploading...");
-                loadingBar.setCanceledOnTouchOutside(false);
-                loadingBar.show();
                 imageUrl = result.getUri();
                 Picasso.get().load(imageUrl.toString()).into(groupProfileImage);
 
