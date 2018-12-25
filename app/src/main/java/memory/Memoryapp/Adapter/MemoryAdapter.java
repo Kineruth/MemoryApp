@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import memory.Memoryapp.DatabaseAPI.ViewPagerAdapter;
 import memory.Memoryapp.Object.Memory;
 import memory.Memoryapp.Object.User;
 import memory.Memoryapp.R;
