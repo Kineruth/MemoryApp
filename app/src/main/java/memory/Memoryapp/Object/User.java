@@ -3,31 +3,57 @@ package memory.Memoryapp.Object;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents the user using the app.
+ */
 public class User {
 
     private String image = "", name, status = "", uid;
     private List<String> groupId = new ArrayList<>();
 
+    /**
+     * Default Constructor
+     */
     public User() { }
 
+    /**
+     * Parameterized Constructor
+     * @param fullName this user's full name.
+     * @param uid this user ID.
+     */
     public User(String fullName ,String uid) {
         this.name = fullName;
         this.uid = uid;
     }
-
+    /**
+     * Parameterized Constructor
+     * @param fullName this user's full name.
+     * @param status this user's status.
+     * @param uid this user ID.
+     * @param image this user's profile image
+     */
     public User(String fullName, String status , String uid, String image) {
         this.name = fullName;
         this.status = status;
         this.uid = uid;
         this.image = image;
     }
-
+    /**
+     * Parameterized Constructor
+     * @param fullName this user's full name.
+     * @param status this user's status.
+     * @param uid this user ID.
+     */
     public User(String fullName, String status , String uid) {
         this.name = fullName;
         this.status = status;
         this.uid = uid;
     }
 
+    /**
+     * Sets all this User's parameters by a given other User.
+     * @param user a given User to be set from.
+     */
     public void setAll(User user){
         this.name = user.name;
         this.status = user.status;

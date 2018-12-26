@@ -43,7 +43,7 @@ public class GroupDiaryActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.group_diary_menu,menu);
-        if(GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary().getManager() != UserDataHolder.getUserDataHolder().getUser().getUid()){
+        if(GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary().getAdmin() != UserDataHolder.getUserDataHolder().getUser().getUid()){
             MenuItem item = menu.findItem(R.id.add_members_option);
             item.setVisible(false);
         }

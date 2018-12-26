@@ -28,14 +28,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DESCRIPTION_COL = 3;
     private static final int CREATION_DATE_COL = 4;
 
+    /**
+     * Parameterized Constructor
+     * @param context the context.
+     */
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VER);
     }
 
     /**
-     * Called when the database is created for the first time. This is where the
-     * creation of tables and the initial population of the tables should happen.
-     *
+     * Called when the database is created for the first time.
+     * This is where the creation of tables and the initial population of the tables should happen.
      * @param db The database.
      */
     @Override
@@ -75,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * will automatically be rolled back.
      * </p>
      *
-     * @param db         The database.
+     * @param db The database.
      * @param oldVersion The old database version.
      * @param newVersion The new database version.
      */
@@ -85,8 +88,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
     /**
-     * This function is query that inserts new line of memory into the database.
-     * @param memory The new memory
+     * This function is a query that inserts new line of memory into the database.
+     * @param memory The new memory.
      * @return true in case the query is good, and false otherwise.
      */
     public boolean setNewMemory(Memory memory) {
@@ -115,7 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * This function is an database query that goes
+     * This function is a database query that goes
      * to the database and retrieves memories object from it.
      * @return ArrayList<Memory> object in case the query is good, and null otherwise.
      */

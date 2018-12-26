@@ -20,15 +20,29 @@ import memory.Memoryapp.Activity.GroupDiary.GroupDiaryActivity;
 import memory.Memoryapp.Object.GroupDiary;
 import memory.Memoryapp.R;
 
+/**
+ * This class represents a group diary adapter.
+ */
 public class GroupDiaryAdapter extends RecyclerView.Adapter<GroupDiaryAdapter.GroupViewHolder> {
     private Context mContext;
     private List<GroupDiary> groupDiaryList;
 
+    /**
+     * Parameterized Constructor.
+     * @param mContext the context.
+     * @param groupDiaryList a list of all the group diaries.
+     */
     public GroupDiaryAdapter(Context mContext, List<GroupDiary> groupDiaryList) {
         this.mContext = mContext;
         this.groupDiaryList = groupDiaryList;
     }
 
+    /**
+     * The creation of the holder.
+     * @param viewGroup a given viewGroup.
+     * @param i a given index.
+     * @return the holder for the group diaries.
+     */
     @NonNull
     @Override
     public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -38,6 +52,11 @@ public class GroupDiaryAdapter extends RecyclerView.Adapter<GroupDiaryAdapter.Gr
         return holder;
     }
 
+    /**
+     * While scrolling down the list, an old view is recycled and reused by binding new data to it.
+     * @param groupViewHolder
+     * @param i a given index.
+     */
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder groupViewHolder, int i) {
         final GroupDiary groupDiary = groupDiaryList.get(i);
@@ -54,15 +73,26 @@ public class GroupDiaryAdapter extends RecyclerView.Adapter<GroupDiaryAdapter.Gr
         });
     }
 
+    /**
+     *
+     * @return the amount of group diaries in the list.
+     */
     @Override
     public int getItemCount() {
         return groupDiaryList.size();
     }
 
+    /**
+     * An inner class that represents the total look of the group diaries list.
+     */
     public class GroupViewHolder extends RecyclerView.ViewHolder {
         TextView groupName;
         CircleImageView groupImage;
 
+        /**
+         * Parameterized Constructor.
+         * @param itemView the group diaries view.
+         */
         public GroupViewHolder(@NonNull final View itemView) {
             super(itemView);
             groupName = itemView.findViewById(R.id.group_name);
