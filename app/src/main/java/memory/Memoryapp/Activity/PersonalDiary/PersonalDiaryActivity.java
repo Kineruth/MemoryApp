@@ -26,7 +26,9 @@ import memory.Memoryapp.Holder.UserDataHolder;
 import memory.Memoryapp.Object.Memory;
 import memory.Memoryapp.R;
 
-
+/**
+ * This class represents all of the user's personal diary activities.
+ */
 public class PersonalDiaryActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
@@ -35,6 +37,11 @@ public class PersonalDiaryActivity extends AppCompatActivity {
     private List<Memory> memoryList;
     private DatabaseReference mData;
 
+    /**
+     * In case the activity needs to be recreated - the saved state can be passed back to onCreate
+     * so there is no lost of this prior information.
+     * @param savedInstanceState a bundle of a saved state of the application.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +55,9 @@ public class PersonalDiaryActivity extends AppCompatActivity {
         super.onResume();
         initRecyclerView();
     }
-
+    /**
+     * Initialization the connection of the fields in xml file to their activities.
+     */
     private void initFields() {
         mToolbar = findViewById(R.id.personal_diary_toolbar);
         setSupportActionBar(mToolbar);
@@ -84,6 +93,11 @@ public class PersonalDiaryActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Used to specify the options menu for an activity
+     * @param menu a given menu to be displayed.
+     * @return true to be displayed.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -91,6 +105,11 @@ public class PersonalDiaryActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Checked what was chosen - adding or searching in the personal diary.
+     * @param item an item that has been selected.
+     * @return false to allow normal menu processing to proceed, true to consume it here.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);

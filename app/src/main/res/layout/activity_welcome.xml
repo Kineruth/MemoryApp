@@ -15,10 +15,10 @@
         android:layout_marginTop="30dp"
         android:fontFamily="@font/maitree"
         android:gravity="center_horizontal"
-        android:text="Stories are made to be told, and memories are made to gather them all."
+        android:text="There are moments that must be cherished and not forgotten..\nOur app will make that happen"
         android:textAlignment="center"
-        android:textColor="#118C7E"
-        android:textSize="24dp"
+        android:textColor="#007d8c"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <ImageView
@@ -47,7 +47,7 @@
         android:paddingBottom="10dp"
         android:text="tap anywhere to continue"
         android:textAlignment="center"
-        android:textColor="#118C7E"
-        android:textSize="24dp"
+        android:textColor="#007d8c"
+        android:textSize="18sp"
         android:textStyle="bold" />
 </RelativeLayout>
