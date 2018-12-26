@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -29,7 +30,6 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
     private Validator validator;
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
-    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,6 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
                 clickOnbtnReset();
             }
         });
-        loadingBar = new ProgressDialog(this);
     }
 
     private void initValidator(){
@@ -64,20 +63,11 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
         validator.validate();
         if(valIsDone){
             final String mail = email.getText().toString();
-            loadingBar.setTitle("Reset Password");
-            loadingBar.setMessage("Please wait, while we are reset your password account for you...");
-            loadingBar.show();
             mAuth.sendPasswordResetEmail(mail)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                loadingBar.dismiss();
-                                loginActivity();
-                            }
-                            else{
-                                Toast.makeText(ResetPasswordActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
+                        public void onSuccess(Void aVoid) {
+                            loginActivity();
                         }
                     });
         }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +37,6 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
     private Validator validator;
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
-    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,6 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
         });
         email = findViewById(R.id.etEmail);
         password = findViewById(R.id.etPassword);
-        loadingBar = new ProgressDialog(this);
     }
 
     private void clickOnbtnLogin() {
@@ -77,25 +76,20 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
         if(valIsDone) {
             String mail = email.getText().toString();
             String pass = password.getText().toString();
-            loadingBar.setTitle("Login Account");
-            loadingBar.setMessage("Please wait, while we are login to your account for you...");
-            loadingBar.show();
             mAuth.signInWithEmailAndPassword(mail, pass)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                loadingBar.dismiss();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                finish();
-                                startActivity(intent);
-                            } else {
-                                loadingBar.dismiss();
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                @Override
+                public void onSuccess(AuthResult authResult) {
+                  mainActivity();
+                }
+            });
         }
+    }
+
+    private void mainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
     }
 
     private void initValidator(){

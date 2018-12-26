@@ -53,9 +53,6 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
     private FirebaseAuth mAuth;
     private DatabaseReference mData;
     private StorageReference userProfileImageRef;
-    private ProgressDialog loadingBar;
-    private static final int GalleryPick = 1;
-    private String imageUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +81,6 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
                 clickOnset_profile_image();
             }
         });
-        loadingBar = new ProgressDialog(this);
     }
 
     private void initValidator(){
@@ -120,9 +116,6 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
     private void clickOnupdate_settings_button() {
         validator.validate();
         if(valIsDone) {
-            loadingBar.setTitle("Update Account");
-            loadingBar.setMessage("Please wait, while we are updating your new account for you...");
-            loadingBar.show();
             String setName = userName.getText().toString();
             String setStatus = userStatus.getText().toString();
             final String uid = mAuth.getCurrentUser().getUid();
@@ -134,15 +127,10 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
                     mData.child("Users")
                             .child(uid)
                             .setValue(user)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        loadingBar.dismiss();
-                                    } else {
-                                        loadingBar.dismiss();
-                                        Toast.makeText(SettingsActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                    }
+                                public void onSuccess(Void aVoid) {
+                                    finish();
                                 }
                             });
                 }
@@ -165,55 +153,39 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == Define.ALBUM_REQUEST_CODE && resultCode == RESULT_OK && data != null){
-            Uri imageUri = (Uri)data.getParcelableArrayListExtra(Define.INTENT_PATH).get(0);
+        if (requestCode == Define.ALBUM_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = (Uri) data.getParcelableArrayListExtra(Define.INTENT_PATH).get(0);
             CropImage.activity(imageUri)
                     .start(this);
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if(resultCode == RESULT_OK){
-                loadingBar.setTitle("Set Profile Image");
-                loadingBar.setMessage("Please wait, while your profile image is uploading...");
-                loadingBar.setCanceledOnTouchOutside(false);
-                loadingBar.show();
+            if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 final StorageReference filePath = userProfileImageRef.child(mAuth.getCurrentUser().getUid() + ".jpg");
-                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                filePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if(task.isSuccessful()){
-                            filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    final String downloaedUrl = uri.toString();
-                                    mData.child("Users").child(mAuth.getCurrentUser().getUid()).child("image")
-                                            .setValue(downloaedUrl)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        loadingBar.dismiss();
-                                                        Picasso.get().load(downloaedUrl).into(userProfileImage);
-                                                    }
-                                                    else {
-                                                        loadingBar.dismiss();
-                                                        Toast.makeText(SettingsActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-                                            });
-                                }
-                            });
-                        }
-                        else{
-                            loadingBar.dismiss();
-                            Toast.makeText(SettingsActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                final String downloaedUrl = uri.toString();
+                                mData.child("Users").child(mAuth.getCurrentUser().getUid()).child("image")
+                                        .setValue(downloaedUrl)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Picasso.get().load(downloaedUrl).into(userProfileImage);
+                                            }
+                                        });
+                            }
+                        });
                     }
                 });
             }
         }
     }
+
 
     @Override
     public void onValidationSucceeded() {
