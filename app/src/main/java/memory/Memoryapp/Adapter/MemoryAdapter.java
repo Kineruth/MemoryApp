@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,11 +34,6 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
     public MemoryAdapter(Context mContext, List<Memory> memoryList) {
         this.mContext = mContext;
         this.memoryList = memoryList;
-        initFireBase();
-    }
-
-    private void initFireBase(){
-        mData = FirebaseDatabase.getInstance().getReference();
     }
 
     @NonNull
@@ -52,28 +48,14 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
     @Override
     public void onBindViewHolder(@NonNull final MemoryViewHolder memoryViewHolder, int i) {
         Memory memory = memoryList.get(i);
-        mData.child("Users").child(memory.getUserID()).addValueEventListener(new ValueEventListener() {
+        memoryViewHolder.textView.setText(memory.getMemoryName());
+        Picasso.get().load(memory.getImage()).into(memoryViewHolder.imageView);
+        memoryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                memoryViewHolder.userName.setText(user.getImage());
-                if (!user.getImage().isEmpty())
-                    Picasso.get().load(user.getImage()).into(memoryViewHolder.profileImage);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onClick(View v) {
 
             }
         });
-        memoryViewHolder.memoryName.setText(memory.getMemoryName());
-        memoryViewHolder.memoryDesciption.setText(memory.getDescription());
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this.mContext, memory.getImages());
-        memoryViewHolder.memoryImages.setAdapter(adapter);
-        Date currentDate = new Date();
-        long diffInMillies = currentDate.getTime() - memory.getCreationTime().getTime();
-        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-        memoryViewHolder.memoryTimePosted.setText(diff + " DAYS AGO");
     }
 
     @Override
@@ -82,21 +64,13 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
     }
 
     public class MemoryViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView profileImage;
-        TextView userName;
-        TextView memoryName;
-        ViewPager memoryImages;
-        TextView memoryDesciption;
-        TextView memoryTimePosted;
+       private ImageView imageView;
+       private TextView textView;
 
         public MemoryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            profileImage = itemView.findViewById(R.id.profile_iv);
-            userName = itemView.findViewById(R.id.username_tv);
-            memoryName = itemView.findViewById(R.id.memory_name_tv);
-            memoryImages = itemView.findViewById(R.id.memory_images_vp);
-            memoryDesciption = itemView.findViewById(R.id.memory_description_tv);
-            memoryTimePosted = itemView.findViewById(R.id.memory_time_posted_tv);
+          super(itemView);
+          imageView = itemView.findViewById(R.id.memory_img_id);
+          textView = itemView.findViewById(R.id.memory_title_id);
         }
     }
 }

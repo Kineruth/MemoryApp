@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import memory.Memoryapp.Activity.Filter.MemberFilter;
+import memory.Memoryapp.Filter.MemberFilter;
 import memory.Memoryapp.Activity.GroupDiary.ProfileActivity;
 import memory.Memoryapp.Holder.ProfileDataHolder;
 import memory.Memoryapp.Object.User;

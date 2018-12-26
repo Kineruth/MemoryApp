@@ -38,7 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
         initFields();
     }
 
-    private void initFireBase(){
+    private void initFireBase() {
         mData = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -61,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
         User user = ProfileDataHolder.getUserDataHolder().getUser();
         userName.setText(user.getName());
         userStatus.setText(user.getStatus());
-        if(!user.getImage().isEmpty())
+        if (!user.getImage().isEmpty())
             Picasso.get().load(user.getImage()).into(profileImage);
 
     }
@@ -89,3 +89,4 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
     }
+}

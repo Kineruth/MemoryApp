@@ -1,4 +1,4 @@
-package memory.Memoryapp.Activity.Filter;
+package memory.Memoryapp.Filter;
 
 import android.widget.Filter;
 

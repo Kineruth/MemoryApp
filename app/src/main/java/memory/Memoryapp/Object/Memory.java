@@ -4,30 +4,27 @@ import java.util.Date;
 import java.util.ArrayList;
 
 public class Memory {
-    private int memoryID;
-    private String userID;
+    private String uid;
     private String memoryName;
     private String description;
     private Date creationTime;
-    private ArrayList<String> images;
+    private String image;
 
-    public Memory(int memoryID, String userID, String memoryName, String description, long creationTime, ArrayList<String> images){
-        this.memoryID = memoryID;
-        this.userID = userID;
+    public Memory(String uid, String memoryName, String description, Date creationTime, String image) {
+        this.uid = uid;
         this.memoryName = memoryName;
         this.description = description;
-        this.creationTime = new Date();
-        this.creationTime.setTime(creationTime);
-        this.images = images;
+        this.creationTime = creationTime;
+        this.image = image;
     }
 
-    public int getMemoryID() {
-        return memoryID;
+    public String getUid() {
+        return uid;
     }
 
-    public String getUserID(){ return userID; }
-
-    public void setUserID(String userID){ this.userID = userID; }
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getMemoryName() {
         return memoryName;
@@ -53,11 +50,11 @@ public class Memory {
         this.creationTime = creationTime;
     }
 
-    public ArrayList<String> getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
-    public void setImages(ArrayList<String> images) {
-        this.images = images;
+    public void setImage(String image) {
+        this.image = image;
     }
 }
