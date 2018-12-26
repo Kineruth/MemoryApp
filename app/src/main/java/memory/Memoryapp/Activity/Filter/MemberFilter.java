@@ -8,12 +8,20 @@ import java.util.List;
 import memory.Memoryapp.Adapter.UserAdapter;
 import memory.Memoryapp.Object.User;
 
+/**
+ * This class represents a filter option for finding members.
+ */
 public class MemberFilter extends Filter {
 
     private List<User> userList;
     private List<User> filterUserList;
     private UserAdapter adapter;
 
+    /**
+     * Parameterized Constructor.
+     * @param userList a given user list.
+     * @param adapter
+     */
     public MemberFilter(List<User> userList, UserAdapter adapter) {
         this.userList = userList;
         this.adapter = adapter;

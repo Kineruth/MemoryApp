@@ -14,16 +14,22 @@ import memory.Memoryapp.R;
  */
 public class MemoryFragment extends Fragment {
 
+    /**
+     * Default Constructor
+     * Required empty public constructor
+     */
+    public MemoryFragment() { }
 
-    public MemoryFragment() {
-        // Required empty public constructor
-    }
-
-
+    /**
+     * Inflates the layout for this fragment.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return this fragment's view.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_memory, container, false);
     }
 
