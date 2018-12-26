@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,7 +29,6 @@ public class ProfileActivity extends AppCompatActivity {
     private CircleImageView profileImage;
     private Button addButton;
     private DatabaseReference mData;
-    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private void initFields() {
-        loadingBar = new ProgressDialog(this);
         userName = findViewById(R.id.user_name_profile);
         userStatus = findViewById(R.id.user_status_profile);
         profileImage = findViewById(R.id.visit_profile_image);
@@ -68,9 +67,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void clickOnAddButton() {
-        loadingBar.setTitle("Add group member");
-        loadingBar.setMessage("Please wait, while we are adding your new group member for you...");
-        loadingBar.show();
         final String groupId = GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary().getUid();
         String profileIf = ProfileDataHolder.getUserDataHolder().getUser().getUid();
         GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary().getGroupMember().add(profileIf);
@@ -78,33 +74,18 @@ public class ProfileActivity extends AppCompatActivity {
         mData.child("Users")
                 .child(profileIf)
                 .setValue(ProfileDataHolder.getUserDataHolder().getUser())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            mData.child("Group Diary")
-                                    .child(groupId)
-                                    .setValue(GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary())
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                loadingBar.dismiss();
-                                                finish();
-                                            }
-                                            else {
-                                                loadingBar.dismiss();
-                                                Toast.makeText(ProfileActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                        }
-                        else {
-                            loadingBar.dismiss();
-                            Toast.makeText(ProfileActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-
-                        }
+                    public void onSuccess(Void aVoid) {
+                        mData.child("Group Diary")
+                                .child(groupId)
+                                .setValue(GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        finish();
+                                    }
+                                });
                     }
                 });
     }
-}
