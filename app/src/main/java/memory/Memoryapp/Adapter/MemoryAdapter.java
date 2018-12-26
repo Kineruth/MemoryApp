@@ -43,7 +43,7 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
         this.memoryList = memoryList;
         initFireBase();
     }
-    
+
     private void initFireBase(){
         mData = FirebaseDatabase.getInstance().getReference();
     }
