@@ -25,6 +25,7 @@ import memory.Memoryapp.R;
  */
 public class MemoryFragment extends Fragment {
 
+<<<<<<< HEAD
     private RecyclerView memoryRecyclerView;
     private MemoryAdapter adapter;
     private List<Memory> memoryList;
@@ -61,7 +62,25 @@ public class MemoryFragment extends Fragment {
     }
 
     private void initRecyclerView() {
+=======
+    /**
+     * Default Constructor
+     * Required empty public constructor
+     */
+    public MemoryFragment() { }
 
+    /**
+     * Inflates the layout for this fragment.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return this fragment's view.
+     */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_memory, container, false);
+>>>>>>> 39ff2e2e6da08db2bd24667381d2dd99992d369b
     }
 
 }

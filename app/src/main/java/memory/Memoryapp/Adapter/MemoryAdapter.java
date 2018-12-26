@@ -1,6 +1,7 @@
 package memory.Memoryapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import memory.Memoryapp.Activity.GroupDiary.GroupDiaryActivity;
+import memory.Memoryapp.Activity.Memory.MemoryActivity;
+import memory.Memoryapp.Holder.MemoryDataHolder;
 import memory.Memoryapp.Object.Memory;
 import memory.Memoryapp.Object.User;
 import memory.Memoryapp.R;
@@ -31,7 +35,6 @@ import memory.Memoryapp.R;
  */
 public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryViewHolder>{
     private Context mContext;
-    private DatabaseReference mData;
     private List<Memory> memoryList;
 
     /**
@@ -65,7 +68,7 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
     @Override
     public MemoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.memory_item, null);
+        View view = inflater.inflate(R.layout.memory_cardview_item, null);
         MemoryAdapter.MemoryViewHolder holder = new MemoryAdapter.MemoryViewHolder(view);
         return holder;
     }
@@ -77,6 +80,7 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
      */
     @Override
     public void onBindViewHolder(@NonNull final MemoryViewHolder memoryViewHolder, int i) {
+<<<<<<< HEAD
         Memory memory = memoryList.get(i);
 <<<<<<< HEAD
         mData.child("Users").child(memory.getUserID()).addValueEventListener(new ValueEventListener() {
@@ -93,13 +97,21 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
              * @param databaseError an error that has occurred.
              */
 =======
+=======
+        final Memory memory = memoryList.get(i);
+>>>>>>> master
         memoryViewHolder.textView.setText(memory.getMemoryName());
-        Picasso.get().load(memory.getImage()).into(memoryViewHolder.imageView);
+        if(!memory.getImage().isEmpty())
+            Picasso.get().load(memory.getImage()).into(memoryViewHolder.imageView);
+        else
+            Picasso.get().load(R.drawable.memory_image).into(memoryViewHolder.imageView);
         memoryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 >>>>>>> master
             @Override
             public void onClick(View v) {
-
+                MemoryDataHolder.getMemoryDataHolder().getMemory().setAll(memory);
+                Intent intent = new Intent(mContext, MemoryActivity.class);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -110,7 +122,7 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
      */
     @Override
     public int getItemCount() {
-        return 0;
+        return memoryList.size();
     }
 
     public class MemoryViewHolder extends RecyclerView.ViewHolder {
