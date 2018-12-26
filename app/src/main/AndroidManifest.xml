@@ -33,7 +33,7 @@
         <activity android:name=".Activity.PersonalDiary.PersonalDiaryActivity" />
         <activity android:name=".Activity.GroupDiary.AddMemberActivity" />
         <activity android:name=".Activity.GroupDiary.ProfileActivity" />
-        <activity android:name=".Activity.Memory.AddPersonalMemoryActivity" />
+        <activity android:name=".Activity.PersonalDiary.AddPersonalMemoryActivity" />
         <activity android:name=".Activity.Memory.MemoryActivity"></activity>
     </application>
 

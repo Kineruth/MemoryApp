@@ -1,4 +1,4 @@
-package memory.Memoryapp.Activity.Memory;
+package memory.Memoryapp.Activity.PersonalDiary;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +9,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -16,26 +17,34 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter;
 import com.sangcomz.fishbun.define.Define;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
+import java.util.List;
 
 import memory.Memoryapp.Holder.UserDataHolder;
 import memory.Memoryapp.Object.Memory;
 import memory.Memoryapp.R;
 
-public class AddPersonalMemoryActivity extends AppCompatActivity {
+public class AddPersonalMemoryActivity extends AppCompatActivity implements Validator.ValidationListener {
 
+    @NotEmpty()
     private EditText descriptionEditText;
+    @NotEmpty()
     private EditText nameEditText;
     private ImageView memoryImageView;
     private DatabaseReference mData;
     private StorageReference personalDiaryImageRef;
     private String key;
     private Uri imageUri = null;
+    private Validator validator;
+    private static boolean valIsDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +52,11 @@ public class AddPersonalMemoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_personal_memory);
         initFields();
         initFireBase();
+        initValidator();
     }
 
     private void initFields(){
-        descriptionEditText = findViewById(R.id.description);
+        descriptionEditText = findViewById(R.id.add_description);
         descriptionEditText.setMovementMethod(new ScrollingMovementMethod());
         nameEditText = findViewById(R.id.memory_name);
         memoryImageView = findViewById(R.id.memory_image);
@@ -56,7 +66,7 @@ public class AddPersonalMemoryActivity extends AppCompatActivity {
                 clickOnAddMemory();
             }
         });
-        memoryImageView = findViewById(R.id.memory_image);
+        memoryImageView = findViewById(R.id.add_memory_image);
         memoryImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +80,11 @@ public class AddPersonalMemoryActivity extends AppCompatActivity {
         key = mData.child("Personal Diary").child(UserDataHolder.getUserDataHolder().getUser().getUid()).child("Memories").push().getKey();
         personalDiaryImageRef = FirebaseStorage.getInstance().getReference().child("Personal Memory").child(UserDataHolder.getUserDataHolder().getUser().getUid());
 
+    }
+
+    private void initValidator(){
+        validator = new Validator(this);
+        validator.setValidationListener(this);
     }
 
     private void clickOnMemoryImage() {
@@ -89,12 +104,13 @@ public class AddPersonalMemoryActivity extends AppCompatActivity {
     }
 
     private void clickOnAddMemory() {
-        final Memory memory = new Memory(key,
+        validator.validate();
+        if(valIsDone && imageUri != null){
+            final Memory memory = new Memory(key,
                 nameEditText.getText().toString(),
                 descriptionEditText.getText().toString(),
                 Calendar.getInstance().getTimeInMillis(),
                 "");
-        if(imageUri != null) {
             final StorageReference filePath = personalDiaryImageRef.child(key + ".jpg");
             filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -102,7 +118,7 @@ public class AddPersonalMemoryActivity extends AppCompatActivity {
                     filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            memory.setImage(imageUri.toString());
+                            memory.setImage(uri.toString());
                             mData.child("Personal Diary").child(UserDataHolder.getUserDataHolder().getUser().getUid()).child("Memories")
                                     .child(key).setValue(memory).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -115,14 +131,25 @@ public class AddPersonalMemoryActivity extends AppCompatActivity {
                 }
             });
         }
-        else{
-            mData.child("Personal Diary").child(UserDataHolder.getUserDataHolder().getUser().getUid()).child("Memories")
-                    .child(key).setValue(memory).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    finish();
-                }
-            });
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        valIsDone = false;
+        for(ValidationError error: errors){
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+            if(view instanceof EditText){
+                ((EditText)view).setError(message);
+            }
+            else{
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
         }
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        valIsDone = true;
     }
 }

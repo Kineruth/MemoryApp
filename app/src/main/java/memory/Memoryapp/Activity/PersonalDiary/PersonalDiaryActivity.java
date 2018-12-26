@@ -21,10 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import memory.Memoryapp.Activity.Memory.AddPersonalMemoryActivity;
 import memory.Memoryapp.Adapter.MemoryAdapter;
 import memory.Memoryapp.Holder.UserDataHolder;
-import memory.Memoryapp.Object.GroupDiary;
 import memory.Memoryapp.Object.Memory;
 import memory.Memoryapp.R;
 

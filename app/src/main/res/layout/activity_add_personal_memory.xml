@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context="memory.Memoryapp.Activity.Memory.AddPersonalMemoryActivity">
+    tools:context="memory.Memoryapp.Activity.PersonalDiary.AddPersonalMemoryActivity">
 
     <EditText
         android:id="@+id/memory_name"
@@ -22,7 +22,7 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/memory_image"
+        android:id="@+id/add_memory_image"
         android:layout_width="match_parent"
         android:layout_height="225dp"
         android:layout_below="@+id/memory_name"
@@ -31,14 +31,15 @@
         android:src="@drawable/addimage" />
 
     <EditText
-        android:id="@+id/description"
+        android:id="@+id/add_description"
         android:layout_width="match_parent"
         android:layout_height="225dp"
-        android:layout_below="@+id/memory_image"
+        android:layout_below="@+id/add_memory_image"
         android:layout_marginLeft="7dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="7dp"
         android:layout_marginBottom="5dp"
+        android:textSize="24sp"
         android:background="@drawable/inputs"
         android:inputType="textCapSentences|textMultiLine"
         android:scrollbars="vertical" />
@@ -47,7 +48,7 @@
         android:id="@+id/add_memory"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/description"
+        android:layout_below="@id/add_description"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
