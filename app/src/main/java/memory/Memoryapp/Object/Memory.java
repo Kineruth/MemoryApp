@@ -8,13 +8,16 @@ import java.util.ArrayList;
  * A Memory is an image and its description. It has other parameters.
  */
 public class Memory {
-    private int memoryID;
-    private String userID;
+    private String uid;
     private String memoryName;
     private String description;
     private Date creationTime;
-    private ArrayList<String> images;
+    private String image;
 
+<<<<<<< HEAD
+    public Memory(String uid, String memoryName, String description, Date creationTime, String image) {
+        this.uid = uid;
+=======
     /**
      * Parameterized Constructor
      * @param memoryID this Memory's ID.
@@ -27,13 +30,22 @@ public class Memory {
     public Memory(int memoryID, String userID, String memoryName, String description, long creationTime, ArrayList<String> images){
         this.memoryID = memoryID;
         this.userID = userID;
+>>>>>>> 39ff2e2e6da08db2bd24667381d2dd99992d369b
         this.memoryName = memoryName;
         this.description = description;
-        this.creationTime = new Date();
-        this.creationTime.setTime(creationTime);
-        this.images = images;
+        this.creationTime = creationTime;
+        this.image = image;
     }
 
+<<<<<<< HEAD
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+=======
     /**
      *
      * @return this Memory's ID.
@@ -52,6 +64,7 @@ public class Memory {
      * @param userID the ID to be set from.
      */
     public void setUserID(String userID){ this.userID = userID; }
+>>>>>>> 39ff2e2e6da08db2bd24667381d2dd99992d369b
 
     /**
      * @return this Memory's name.
@@ -98,6 +111,14 @@ public class Memory {
         this.creationTime = creationTime;
     }
 
+<<<<<<< HEAD
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+=======
     /**
      * @return
      */
@@ -111,5 +132,6 @@ public class Memory {
      */
     public void setImages(ArrayList<String> images) {
         this.images = images;
+>>>>>>> 39ff2e2e6da08db2bd24667381d2dd99992d369b
     }
 }

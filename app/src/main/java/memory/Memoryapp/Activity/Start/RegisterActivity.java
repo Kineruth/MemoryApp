@@ -47,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
     private DatabaseReference mData;
-    private ProgressDialog loadingBar;
 
     /**
      * In case the activity needs to be recreated - the saved state can be passed back to onCreate
@@ -77,7 +76,6 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                 clickOnBtnRegister();
             }
         });
-        loadingBar = new ProgressDialog(this);
     }
 
     /**
@@ -104,12 +102,16 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
             String mail = email.getText().toString();
             String pass = password.getText().toString();
             final String name = fullname.getText().toString();
+<<<<<<< HEAD
             loadingBar.setTitle("Creating New Account");
             loadingBar.setMessage("Please wait, creating your account...");
             loadingBar.show();
+=======
+>>>>>>> master
             mAuth.createUserWithEmailAndPassword(mail,pass)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
+<<<<<<< HEAD
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 User user = new User(name,mAuth.getCurrentUser().getUid());
@@ -147,9 +149,28 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                                 loadingBar.dismiss();
                                 Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
+=======
+                        public void onSuccess(AuthResult authResult) {
+                            mData.child("Users")
+                                    .child(mAuth.getCurrentUser().getUid())
+                                    .setValue(new User(name,mAuth.getCurrentUser().getUid()))
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            mData.child("Personal Diary")
+                                                    .child(mAuth.getCurrentUser().getUid())
+                                                    .setValue(new PersonalDiary("My Diary", "", mData.child("Personal Diary").push().getKey()))
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            loginActivity();
+                                                        }
+                                                    });
+                                        }
+                                    });
+>>>>>>> master
                         }
                     });
-
         }
     }
 

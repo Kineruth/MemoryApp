@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +39,6 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
     private Validator validator;
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
-    private ProgressDialog loadingBar;
 
     /**
      * The bundle can be passed back to onCreate if the activity needs to be recreated
@@ -91,7 +91,6 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
         });
         email = findViewById(R.id.etEmail);
         password = findViewById(R.id.etPassword);
-        loadingBar = new ProgressDialog(this);
     }
 
     /**
@@ -102,6 +101,7 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
         if(valIsDone) {
             String mail = email.getText().toString();
             String pass = password.getText().toString();
+<<<<<<< HEAD
             loadingBar.setTitle("Login Account");
             loadingBar.setMessage("Please wait, logging to your account...");
             loadingBar.show();
@@ -130,6 +130,24 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
     /**
      *
      */
+=======
+            mAuth.signInWithEmailAndPassword(mail, pass)
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                @Override
+                public void onSuccess(AuthResult authResult) {
+                  mainActivity();
+                }
+            });
+        }
+    }
+
+    private void mainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
+    }
+
+>>>>>>> master
     private void initValidator(){
         validator = new Validator(this);
         validator.setValidationListener(this);
