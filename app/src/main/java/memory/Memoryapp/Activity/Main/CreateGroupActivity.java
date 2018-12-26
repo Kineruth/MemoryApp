@@ -33,6 +33,9 @@ import memory.Memoryapp.Holder.UserDataHolder;
 import memory.Memoryapp.Object.GroupDiary;
 import memory.Memoryapp.R;
 
+/**
+ * This class represents all the activities for creating a group.
+ */
 public class CreateGroupActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     @NotEmpty
@@ -48,6 +51,11 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
     private String key;
     private Uri imageUrl = null;
 
+    /**
+     * In case the activity needs to be recreated - the saved state can be passed back to onCreate
+     * so there is no lost of this prior information.
+     * @param savedInstanceState a bundle of a saved state of the application.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +65,9 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
         initFireBase();
     }
 
-
+    /**
+     * Initialization the connection of the fields in xml file to their activities.
+     */
     private void initFields(){
         findViewById(R.id.create_group_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +92,9 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
         validator.setValidationListener(this);
     }
 
+    /**
+     * Gets the groupDiary images and adds a new key - groups.
+     */
     private void initFireBase(){
         mAuth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
@@ -89,7 +102,9 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
         key = mData.child("Groups").push().getKey();
 
     }
-
+/**
+ * When clicking on 'Create Group' button.
+ */
     private void clickOnCreateGroupButton(){
         validator.validate();
         if(valIsDone){
@@ -103,6 +118,10 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
                 groupDiary = new GroupDiary(groupName.getText().toString(), imageUrl.toString(), key, mAuth.getCurrentUser().getUid());
             mData.child("Group Diary").child(key).setValue(groupDiary)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        /**
+                         * when the task is completed, even if it failed.
+                         * @param task a given task to be checked if completed.
+                         */
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
@@ -121,26 +140,26 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
                                                                 if (task.isSuccessful()) {
                                                                     loadingBar.dismiss();
                                                                     finish();
-                                                                } else {
+                                                                } else { //failed
                                                                     loadingBar.dismiss();
                                                                     Toast.makeText(CreateGroupActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
                                                         });
                                                     }
-                                                    else{
+                                                    else{ //failed
                                                         loadingBar.dismiss();
                                                         finish();
                                                     }
                                                 }
-                                                else {
+                                                else { //failed
                                                     loadingBar.dismiss();
                                                     Toast.makeText(CreateGroupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                                 }
                                             }
                                         });
                             }
-                            else {
+                            else { //failed
                                 loadingBar.dismiss();
                                 Toast.makeText(CreateGroupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
@@ -149,6 +168,9 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
         }
     }
 
+    /**
+     * When clicked on 'set group image'.
+     */
     private void clickOnset_group_image() {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -156,6 +178,12 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
         startActivityForResult(galleryIntent, GalleryPick);
     }
 
+    /**
+     * Calling this method when starting another activity from current to get the result for it
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -180,11 +208,18 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
         }
     }
 
+    /**
+     * Called when all the 'Rules' added to this Validator are valid.
+     */
     @Override
     public void onValidationSucceeded() {
         valIsDone = true;
     }
 
+    /**
+     * Called if any of the Rules fail.
+     * @param errors the errors.
+     */
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         valIsDone = false;

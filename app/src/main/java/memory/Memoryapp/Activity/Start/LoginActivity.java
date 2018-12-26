@@ -24,20 +24,27 @@ import java.util.List;
 import memory.Memoryapp.Activity.Main.MainActivity;
 import memory.Memoryapp.R;
 
+/**
+ * This class represents all the login activities.
+ */
 public class LoginActivity extends Activity implements Validator.ValidationListener {
-
 
     @NotEmpty()
     @Email()
     private EditText email;
     @NotEmpty()
-    @Password(min = 1, message = "Minimum 6 characters")
+    @Password(min = 1, message = "Minimum 6 Characters")
     private EditText password;
     private Validator validator;
     private static boolean valIsDone;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
 
+    /**
+     * The bundle can be passed back to onCreate if the activity needs to be recreated
+     * and we won't lose this prior information
+     * @param savedInstanceState th saved state of the application.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,20 +55,35 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
 
     }
 
+    /**
+     * Initialization the connection of the fields in xml file to their activities.
+     */
     private void initFields(){
         findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
+            /**
+             * Called when a view has been clicked.
+             * @param v the view that has been clicked.
+             */
             @Override
             public void onClick(View v) {
-                clickOnbtnLogin();
+                clickOnBtnLogin();
             }
         });
         findViewById(R.id.tvRegister).setOnClickListener(new View.OnClickListener() {
+            /**
+             * Called when a view has been clicked.
+             * @param v the view that has been clicked.
+             */
             @Override
             public void onClick(View v) {
                 clickOntvRegister();
             }
         });
         findViewById(R.id.tvResetPassword).setOnClickListener(new View.OnClickListener() {
+            /**
+             * Called when a view has been clicked.
+             * @param v the view that has been clicked.
+             */
             @Override
             public void onClick(View v) {
                 clickOntvResetPassword();
@@ -72,16 +94,23 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
         loadingBar = new ProgressDialog(this);
     }
 
-    private void clickOnbtnLogin() {
+    /**
+     * When the button 'Login' was clicked.
+     */
+    private void clickOnBtnLogin() {
         validator.validate();
         if(valIsDone) {
             String mail = email.getText().toString();
             String pass = password.getText().toString();
             loadingBar.setTitle("Login Account");
-            loadingBar.setMessage("Please wait, while we are login to your account for you...");
+            loadingBar.setMessage("Please wait, logging to your account...");
             loadingBar.show();
             mAuth.signInWithEmailAndPassword(mail, pass)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        /**
+                         *  Will fire when the task is completed, else - will dismiss if it failed.
+                         * @param task the task to be checked if completed.
+                         */
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
@@ -98,37 +127,60 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
         }
     }
 
+    /**
+     *
+     */
     private void initValidator(){
         validator = new Validator(this);
         validator.setValidationListener(this);
     }
 
+    /**
+     * Gets the firebase instances.
+     */
     private void initFireBase(){
         mAuth = FirebaseAuth.getInstance();
     }
 
+    /**
+     * When clicked on the 'Register' button.
+     */
     private void clickOntvRegister() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
         clearError();
     }
 
+    /**
+     * When clicked on the 'Reset Password' button.
+     * An intent - basically a message to say you did or want something to happen.
+     */
     private void clickOntvResetPassword() {
         Intent intent = new Intent(this, ResetPasswordActivity.class);
         startActivity(intent);
         clearError();
     }
 
+    /**
+     * Sets the error message to null - so here is no error.
+     */
     private void clearError() {
         email.setError(null);
         password.setError(null);
     }
 
+    /**
+     * Validation succeeded.
+     */
     @Override
     public void onValidationSucceeded() {
         valIsDone = true;
     }
 
+    /**
+     * Validation failed - sends errors messages.
+     * @param errors all the errors to be shown.
+     */
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         valIsDone = false;

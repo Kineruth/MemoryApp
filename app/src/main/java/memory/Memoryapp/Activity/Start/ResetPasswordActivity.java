@@ -21,6 +21,9 @@ import java.util.List;
 
 import memory.Memoryapp.R;
 
+/**
+ * This class represents all the reset Password activities.
+ */
 public class ResetPasswordActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     @NotEmpty()
@@ -31,6 +34,11 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
 
+    /**
+     * In case the activity needs to be recreated - the saved state can be passed back to onCreate
+     * so there is no lost of this prior information.
+     * @param savedInstanceState a bundle of a saved state of the application.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,32 +48,44 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
         initFireBase();
     }
 
+    /**
+     * Initialization the connection of the fields in xml file to their activities.
+     */
     private void initFields(){
         email = findViewById(R.id.etResetEmail);
         findViewById(R.id.btnReset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickOnbtnReset();
+                clickOnBtnReset();
             }
         });
         loadingBar = new ProgressDialog(this);
     }
 
+    /**
+     *
+     */
     private void initValidator(){
         validator = new Validator(this);
         validator.setValidationListener(this);
     }
 
+    /**
+     * Gets the firebase instances & references.
+     */
     private void initFireBase(){
         mAuth = FirebaseAuth.getInstance();
     }
 
-    private void clickOnbtnReset() {
+    /**
+     * When the 'Reset Password' button was clicked.
+     */
+    private void clickOnBtnReset() {
         validator.validate();
         if(valIsDone){
             final String mail = email.getText().toString();
             loadingBar.setTitle("Reset Password");
-            loadingBar.setMessage("Please wait, while we are reset your password account for you...");
+            loadingBar.setMessage("Please wait while we reset your password...");
             loadingBar.show();
             mAuth.sendPasswordResetEmail(mail)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -75,7 +95,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
                                 loadingBar.dismiss();
                                 loginActivity();
                             }
-                            else{
+                            else{ //failed
                                 Toast.makeText(ResetPasswordActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
@@ -83,11 +103,18 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
         }
     }
 
+    /**
+     * Validation succeeded.
+     */
     @Override
     public void onValidationSucceeded() {
         valIsDone = true;
     }
 
+    /**
+     * Validation failed - sends errors messages.
+     * @param errors all the errors to be shown.
+     */
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         valIsDone = false;
@@ -103,6 +130,10 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
         }
     }
 
+    /**
+     * Connects to login activity.
+     * An intent - basically a message to say you did or want something to happen.
+     */
     private void loginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

@@ -29,16 +29,19 @@ import memory.Memoryapp.Object.PersonalDiary;
 import memory.Memoryapp.Object.User;
 import memory.Memoryapp.R;
 
+/**
+ * This class represents all the registration activities.
+ */
 public class RegisterActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     @NotEmpty()
     @Email()
     private EditText email;
     @NotEmpty()
-    @Password(message = "Minimum 6 characters")
+    @Password(message = "Minimum 6 Characters")
     private EditText password;
     @NotEmpty
-    @Pattern(message = "Input must contain only letters", regex = "[a-zA-Z][a-zA-Z ]+")
+    @Pattern(message = "Input Must Contain Only Letters", regex = "[a-zA-Z][a-zA-Z ]+")
     private EditText fullname;
     private Validator validator;
     private static boolean valIsDone;
@@ -46,6 +49,11 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     private DatabaseReference mData;
     private ProgressDialog loadingBar;
 
+    /**
+     * In case the activity needs to be recreated - the saved state can be passed back to onCreate
+     * so there is no lost of this prior information.
+     * @param savedInstanceState a bundle of a saved state of the application.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +64,9 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
 
     }
 
+    /**
+     * Initialization the connection of the fields in xml file to their activities.
+     */
     private void initFields(){
         email = findViewById(R.id.etEmail);
         password = findViewById(R.id.etPassword);
@@ -63,30 +74,38 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         findViewById(R.id.btnRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickOnbtnRegister();
+                clickOnBtnRegister();
             }
         });
         loadingBar = new ProgressDialog(this);
     }
 
+    /**
+     *
+     */
     private void initValidator(){
         validator = new Validator(this);
         validator.setValidationListener(this);
     }
-
+    /**
+     * Gets the firebase instances & references.
+     */
     private void initFireBase(){
         mAuth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
     }
 
-    private void clickOnbtnRegister() {
+    /**
+     * When the button 'Register' was clicked.
+     */
+    private void clickOnBtnRegister() {
         validator.validate();
         if(valIsDone){
             String mail = email.getText().toString();
             String pass = password.getText().toString();
             final String name = fullname.getText().toString();
             loadingBar.setTitle("Creating New Account");
-            loadingBar.setMessage("Please wait, while we are creating new account for you...");
+            loadingBar.setMessage("Please wait, creating your account...");
             loadingBar.show();
             mAuth.createUserWithEmailAndPassword(mail,pass)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -110,21 +129,21 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                                                                loadingBar.dismiss();
                                                                loginActivity();
                                                            }
-                                                           else {
+                                                           else { //failed
                                                                loadingBar.dismiss();
                                                                Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                                            }
                                                        }
                                                    });
                                         }
-                                        else{
+                                        else{ //failed
                                             loadingBar.dismiss();
                                             Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                         }
                                     }
                                 });
                             }
-                            else{
+                            else{ //failed
                                 loadingBar.dismiss();
                                 Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
@@ -134,6 +153,10 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         }
     }
 
+    /**
+     * Called if any of the Rules fail.
+     * @param errors the errors.
+     */
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         valIsDone = false;
@@ -149,11 +172,18 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         }
     }
 
+    /**
+     * Called when all the 'Rules' added to this Validator are valid.
+     */
     @Override
     public void onValidationSucceeded() {
         valIsDone = true;
     }
 
+    /**
+     * Connects to login activity.
+     * An intent - basically a message to say you did or want something to happen.
+     */
     private void loginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

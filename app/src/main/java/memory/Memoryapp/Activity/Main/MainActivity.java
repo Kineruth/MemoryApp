@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
     private List<GroupDiary> groupDiaryList;
     private List<PersonalDiary> personalDiaryList;
 
+    /**
+     * In case the activity needs to be recreated - the saved state can be passed back to onCreate
+     * so there is no lost of this prior information.
+     * @param savedInstanceState a bundle of a saved state of the application.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +57,18 @@ public class MainActivity extends AppCompatActivity {
         initUser();
     }
 
+    /**
+     * Called when continuing the app when it is paused.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         initRecyclerView();
     }
 
+    /**
+     * Initialization the connection of the fields in xml file to their activities.
+     */
     private void initFields(){
         mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
@@ -69,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         personalRecyclerView = findViewById(R.id.PersonalDiaryRecyclerView);
         personalRecyclerView.setHasFixedSize(true);
         personalRecyclerView.setLayoutManager(new LinearLayoutManager(this){
+            /**
+             * Checks if this view can be scrolled vertically in a certain direction.
+             * @return false for scrolling up, true for down.
+             */
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -80,11 +95,17 @@ public class MainActivity extends AppCompatActivity {
         personalRecyclerView.setAdapter(personalDiaryAdapter);
     }
 
+    /**
+     * Gets the firebase instances & references.
+     */
     private void initFireBase(){
         mData = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
     }
 
+    /**
+     * Initializing the user.
+     */
     private void initUser() {
         mData.child("Users").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -94,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
                 initRecyclerView();
             }
 
+            /**
+             *  when an error occurs.
+             * @param databaseError the errors.
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -101,8 +126,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializing a recycle view.
+     */
     private void initRecyclerView() {
         mData.child("Group Diary").addValueEventListener(new ValueEventListener() {
+            /**
+             * It is triggered once when the listener is attached,
+             * and again every time the data, including children, changes.
+             * @param dataSnapshot the data.
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 groupDiaryList.clear();
@@ -114,12 +147,22 @@ public class MainActivity extends AppCompatActivity {
                 groupDiaryAdapter.notifyDataSetChanged();
             }
 
+            /**
+             * when an error occurs.
+             * @param databaseError the errors.
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
         mData.child("Personal Diary").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            /**
+             * It is triggered once when the listener is attached,
+             * and again every time the data, including children, changes.
+             * @param dataSnapshot the data.
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 personalDiaryList.clear();
@@ -128,6 +171,10 @@ public class MainActivity extends AppCompatActivity {
                 personalDiaryAdapter.notifyDataSetChanged();
             }
 
+            /**
+             * when an error occurs.
+             * @param databaseError the errors.
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -135,6 +182,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Used to specify the options menu for an activity
+     * @param menu a given menu to be displayed.
+     * @return true to be displayed.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -142,6 +194,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Checked what was chosen - adding or searching in the personal diary.
+     * @param item an item that has been selected.
+     * @return false to allow normal menu processing to proceed, true to consume it here.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
@@ -157,16 +214,26 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Connects to the group activity and starts it.
+     */
     private void createGroupActivity() {
         Intent intent = new Intent(MainActivity.this, CreateGroupActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Connects to the settings activity and starts it.
+     */
     private void settingsActivity() {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Connects to login activity and starts it.
+     * An intent - basically a message to say you did or want something to happen.
+     */
     private void loginActivity() {
         mAuth.signOut();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);

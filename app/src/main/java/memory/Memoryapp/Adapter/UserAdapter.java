@@ -43,10 +43,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     /**
-     *  The creation of the holder.
-     * @param viewGroup a given viewGroup
+     * Creates a new view holder when there are no existing view holders which the RecyclerView can reuse.
+     * @param viewGroup a given viewGroup.
      * @param i a given index.
-     * @return a userViewHolder.
+     * @return a userViewHolder that has been created..
      */
     @NonNull
     @Override
@@ -59,7 +59,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     /**
      * While scrolling down the list, an old view is recycled and reused by binding new data to it.
-     * @param userViewHolder
+     * @param userViewHolder a given userViewHolder.
      * @param i a given index.
      */
     @Override

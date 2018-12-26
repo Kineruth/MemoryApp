@@ -54,6 +54,11 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
     private static final int GalleryPick = 1;
     private String imageUrl = "";
 
+    /**
+     * In case the activity needs to be recreated - the saved state can be passed back to onCreate
+     * so there is no lost of this prior information.
+     * @param savedInstanceState a bundle of a saved state of the application.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,9 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
 
     }
 
+    /**
+     * Initialization the connection of the fields in xml file to their activities.
+     */
     private void initFields(){
         findViewById(R.id.update_settings_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +84,10 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
         userStatus = findViewById(R.id.set_profile_status);
         userProfileImage = findViewById(R.id.set_profile_image);
         userProfileImage.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 clickOnset_profile_image();
@@ -89,6 +101,9 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
         validator.setValidationListener(this);
     }
 
+    /**
+     * Gets the firebase instances & references.
+     */
     private void initFireBase(){
         mAuth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
@@ -97,6 +112,11 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
 
     private void initSettings() {
         mData.child("Users").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            /**
+             * It is triggered once when the listener is attached,
+             * and again every time the data, including children, changes.
+             * @param dataSnapshot the data.
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -107,6 +127,10 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
 
             }
 
+            /**
+             * when an error occurrs.
+             * @param databaseError the error.
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -114,6 +138,9 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
         });
     }
 
+    /**
+     * Called when clicked on 'update settings' button.
+     */
     private void clickOnupdate_settings_button() {
         validator.validate();
         if(valIsDone) {
@@ -125,6 +152,11 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
             final String uid = mAuth.getCurrentUser().getUid();
             final User user = new User(setName, setStatus, uid);
             mData.child("Users").child(mAuth.getCurrentUser().getUid()).child("image").addListenerForSingleValueEvent(new ValueEventListener() {
+                /**
+                 * It is triggered once when the listener is attached,
+                 * and again every time the data, including children, changes.
+                 * @param dataSnapshot the data.
+                 */
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     user.setImage(dataSnapshot.getValue(String.class));
@@ -144,6 +176,10 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
                             });
                 }
 
+                /**
+                 * when an error occurrs.
+                 * @param databaseError the error.
+                 */
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -152,6 +188,9 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
         }
     }
 
+    /**
+     * Called when clicked on 'set profile image'.
+     */
     private void clickOnset_profile_image() {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -159,6 +198,12 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
         startActivityForResult(galleryIntent, GalleryPick);
     }
 
+    /**
+     * Calling this method when starting another activity from current to get the result for it
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -214,11 +259,18 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
         }
     }
 
+    /**
+     * Called when all the 'Rules' added to this Validator are valid.
+     */
     @Override
     public void onValidationSucceeded() {
         valIsDone = true;
     }
 
+    /**
+     * Called if any of the Rules fail.
+     * @param errors the errors.
+     */
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         valIsDone = false;

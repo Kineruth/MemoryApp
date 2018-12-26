@@ -44,10 +44,19 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
         initFireBase();
     }
 
+    /**
+     *
+     */
     private void initFireBase(){
         mData = FirebaseDatabase.getInstance().getReference();
     }
 
+    /**
+     * Creates a new view holder when there are no existing view holders which the RecyclerView can reuse.
+     * @param viewGroup a given viewGroup.
+     * @param i agiven index.
+     * @return the memory holder that was created.
+     */
     @NonNull
     @Override
     public MemoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -57,6 +66,11 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
         return holder;
     }
 
+    /**
+     * While scrolling down the list, an old view is recycled and reused by binding new data to it.
+     * @param memoryViewHolder
+     * @param i a given index.
+     */
     @Override
     public void onBindViewHolder(@NonNull final MemoryViewHolder memoryViewHolder, int i) {
         Memory memory = memoryList.get(i);
@@ -69,6 +83,10 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
                     Picasso.get().load(user.getImage()).into(memoryViewHolder.profileImage);
             }
 
+            /**
+             * Catches all the database errors .
+             * @param databaseError an error that has occurred.
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -84,6 +102,10 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
         memoryViewHolder.memoryTimePosted.setText(diff + " DAYS AGO");
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return 0;

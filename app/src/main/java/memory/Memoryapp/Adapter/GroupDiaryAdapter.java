@@ -38,7 +38,7 @@ public class GroupDiaryAdapter extends RecyclerView.Adapter<GroupDiaryAdapter.Gr
     }
 
     /**
-     * The creation of the holder.
+     * Creates a new view holder when there are no existing view holders which the RecyclerView can reuse.
      * @param viewGroup a given viewGroup.
      * @param i a given index.
      * @return the holder for the group diaries.
