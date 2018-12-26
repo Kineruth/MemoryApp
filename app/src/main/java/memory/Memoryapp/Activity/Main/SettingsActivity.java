@@ -230,14 +230,6 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
             }
         }
     }
-
-<<<<<<< HEAD
-    /**
-     * Called when all the 'Rules' added to this Validator are valid.
-     */
-=======
-
->>>>>>> master
     @Override
     public void onValidationSucceeded() {
         valIsDone = true;

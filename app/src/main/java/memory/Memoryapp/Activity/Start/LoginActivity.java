@@ -101,36 +101,6 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
         if(valIsDone) {
             String mail = email.getText().toString();
             String pass = password.getText().toString();
-<<<<<<< HEAD
-            loadingBar.setTitle("Login Account");
-            loadingBar.setMessage("Please wait, logging to your account...");
-            loadingBar.show();
-            mAuth.signInWithEmailAndPassword(mail, pass)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        /**
-                         *  Will fire when the task is completed, else - will dismiss if it failed.
-                         * @param task the task to be checked if completed.
-                         */
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                loadingBar.dismiss();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                finish();
-                                startActivity(intent);
-                            } else {
-                                loadingBar.dismiss();
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-        }
-    }
-
-    /**
-     *
-     */
-=======
             mAuth.signInWithEmailAndPassword(mail, pass)
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
@@ -147,7 +117,6 @@ public class LoginActivity extends Activity implements Validator.ValidationListe
         startActivity(intent);
     }
 
->>>>>>> master
     private void initValidator(){
         validator = new Validator(this);
         validator.setValidationListener(this);

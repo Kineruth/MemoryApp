@@ -83,28 +83,11 @@ public class ResetPasswordActivity extends AppCompatActivity implements Validato
         validator.validate();
         if(valIsDone){
             final String mail = email.getText().toString();
-<<<<<<< HEAD
-            loadingBar.setTitle("Reset Password");
-            loadingBar.setMessage("Please wait while we reset your password...");
-            loadingBar.show();
-=======
->>>>>>> master
             mAuth.sendPasswordResetEmail(mail)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-<<<<<<< HEAD
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                loadingBar.dismiss();
-                                loginActivity();
-                            }
-                            else{ //failed
-                                Toast.makeText(ResetPasswordActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-=======
                         public void onSuccess(Void aVoid) {
                             loginActivity();
->>>>>>> master
                         }
                     });
         }

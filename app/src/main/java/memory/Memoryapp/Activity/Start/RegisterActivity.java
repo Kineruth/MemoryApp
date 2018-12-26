@@ -98,77 +98,39 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
      */
     private void clickOnBtnRegister() {
         validator.validate();
-        if(valIsDone){
+        if (valIsDone) {
             String mail = email.getText().toString();
             String pass = password.getText().toString();
             final String name = fullname.getText().toString();
-<<<<<<< HEAD
-            loadingBar.setTitle("Creating New Account");
-            loadingBar.setMessage("Please wait, creating your account...");
-            loadingBar.show();
-=======
->>>>>>> master
-            mAuth.createUserWithEmailAndPassword(mail,pass)
+            mAuth.createUserWithEmailAndPassword(mail, pass)
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
-<<<<<<< HEAD
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                User user = new User(name,mAuth.getCurrentUser().getUid());
-                                mData.child("Users")
-                                        .child(mAuth.getCurrentUser().getUid())
-                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull final Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                           mData.child("Personal Diary")
-                                                   .child(mAuth.getCurrentUser().getUid())
-                                                   .setValue(new PersonalDiary("My Diary", "", mData.child("Personal Diary").push().getKey()))
-                                                   .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                       @Override
-                                                       public void onSuccess(Void aVoid) {
-                                                           if(task.isSuccessful()){
-                                                               loadingBar.dismiss();
-                                                               loginActivity();
-                                                           }
-                                                           else { //failed
-                                                               loadingBar.dismiss();
-                                                               Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                                           }
-                                                       }
-                                                   });
-                                        }
-                                        else{ //failed
-                                            loadingBar.dismiss();
-                                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                });
-                            }
-                            else{ //failed
-                                loadingBar.dismiss();
-                                Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-=======
                         public void onSuccess(AuthResult authResult) {
+                            User user = new User(name, mAuth.getCurrentUser().getUid());
                             mData.child("Users")
                                     .child(mAuth.getCurrentUser().getUid())
-                                    .setValue(new User(name,mAuth.getCurrentUser().getUid()))
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            mData.child("Personal Diary")
-                                                    .child(mAuth.getCurrentUser().getUid())
-                                                    .setValue(new PersonalDiary("My Diary", "", mData.child("Personal Diary").push().getKey()))
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            loginActivity();
-                                                        }
-                                                    });
-                                        }
-                                    });
->>>>>>> master
+                                    .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    mData.child("Users")
+                                            .child(mAuth.getCurrentUser().getUid())
+                                            .setValue(new User(name, mAuth.getCurrentUser().getUid()))
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    mData.child("Personal Diary")
+                                                            .child(mAuth.getCurrentUser().getUid())
+                                                            .setValue(new PersonalDiary("My Diary", "", mData.child("Personal Diary").push().getKey()))
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    loginActivity();
+                                                                }
+                                                            });
+                                                }
+                                            });
+                                }
+                            });
                         }
                     });
         }

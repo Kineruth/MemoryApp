@@ -103,37 +103,10 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
         key = mData.child("Groups").push().getKey();
 
     }
-<<<<<<< HEAD
 /**
  * When clicking on 'Create Group' button.
  */
     private void clickOnCreateGroupButton(){
-        validator.validate();
-        if(valIsDone){
-            loadingBar.setTitle("Create GroupDiary");
-            loadingBar.setMessage("Please wait, while we are create your new groupDiary for you...");
-            loadingBar.show();
-            GroupDiary groupDiary;
-            if(imageUrl == null)
-                groupDiary = new GroupDiary(groupName.getText().toString(), "", key, mAuth.getCurrentUser().getUid());
-            else
-                groupDiary = new GroupDiary(groupName.getText().toString(), imageUrl.toString(), key, mAuth.getCurrentUser().getUid());
-            mData.child("Group Diary").child(key).setValue(groupDiary)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        /**
-                         * when the task is completed, even if it failed.
-                         * @param task a given task to be checked if completed.
-                         */
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                UserDataHolder.getUserDataHolder().getUser().getGroupId().add(key);
-                                mData.child("Users").child(mAuth.getCurrentUser().getUid())
-                                        .setValue(UserDataHolder.getUserDataHolder().getUser())
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-=======
-
-    private void clickOnCreateGroupButton() {
         validator.validate();
         if (valIsDone) {
             final GroupDiary groupDiary = new GroupDiary(groupName.getText().toString(), "", key, mAuth.getCurrentUser().getUid());
@@ -148,7 +121,6 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
                                 groupDiary.setImage(uri.toString());
                                 mData.child("Group Diary").child(key).setValue(groupDiary)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
->>>>>>> master
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 UserDataHolder.getUserDataHolder().getUser().getGroupId().add(key);
@@ -156,34 +128,6 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
                                                         .setValue(UserDataHolder.getUserDataHolder().getUser())
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
-<<<<<<< HEAD
-                                                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    loadingBar.dismiss();
-                                                                    finish();
-                                                                } else { //failed
-                                                                    loadingBar.dismiss();
-                                                                    Toast.makeText(CreateGroupActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }
-                                                        });
-                                                    }
-                                                    else{ //failed
-                                                        loadingBar.dismiss();
-                                                        finish();
-                                                    }
-                                                }
-                                                else { //failed
-                                                    loadingBar.dismiss();
-                                                    Toast.makeText(CreateGroupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                                }
-                                            }
-                                        });
-                            }
-                            else { //failed
-                                loadingBar.dismiss();
-                                Toast.makeText(CreateGroupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-=======
                                                             public void onSuccess(Void aVoid) {
                                                                 finish();
                                                             }
@@ -209,21 +153,12 @@ public class CreateGroupActivity extends AppCompatActivity implements Validator.
                                                 finish();
                                             }
                                         });
->>>>>>> master
                             }
                         });
             }
         }
     }
 
-<<<<<<< HEAD
-    /**
-     * When clicked on 'set group image'.
-     */
-=======
-
-
->>>>>>> master
     private void clickOnset_group_image() {
         FishBun.with(this).setImageAdapter(new GlideAdapter())
                 .setMinCount(1)

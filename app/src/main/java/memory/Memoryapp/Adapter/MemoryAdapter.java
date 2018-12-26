@@ -45,19 +45,7 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
     public MemoryAdapter(Context mContext, List<Memory> memoryList) {
         this.mContext = mContext;
         this.memoryList = memoryList;
-<<<<<<< HEAD
-        initFireBase();
     }
-
-    /**
-     *
-     */
-    private void initFireBase(){
-        mData = FirebaseDatabase.getInstance().getReference();
-=======
->>>>>>> master
-    }
-
     /**
      * Creates a new view holder when there are no existing view holders which the RecyclerView can reuse.
      * @param viewGroup a given viewGroup.
@@ -80,33 +68,13 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
      */
     @Override
     public void onBindViewHolder(@NonNull final MemoryViewHolder memoryViewHolder, int i) {
-<<<<<<< HEAD
-        Memory memory = memoryList.get(i);
-<<<<<<< HEAD
-        mData.child("Users").child(memory.getUserID()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                memoryViewHolder.userName.setText(user.getImage());
-                if (!user.getImage().isEmpty())
-                    Picasso.get().load(user.getImage()).into(memoryViewHolder.profileImage);
-            }
-
-            /**
-             * Catches all the database errors .
-             * @param databaseError an error that has occurred.
-             */
-=======
-=======
         final Memory memory = memoryList.get(i);
->>>>>>> master
         memoryViewHolder.textView.setText(memory.getMemoryName());
         if(!memory.getImage().isEmpty())
             Picasso.get().load(memory.getImage()).into(memoryViewHolder.imageView);
         else
             Picasso.get().load(R.drawable.memory_image).into(memoryViewHolder.imageView);
         memoryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
->>>>>>> master
             @Override
             public void onClick(View v) {
                 MemoryDataHolder.getMemoryDataHolder().getMemory().setAll(memory);
