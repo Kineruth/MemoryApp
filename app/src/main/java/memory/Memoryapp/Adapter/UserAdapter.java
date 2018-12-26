@@ -20,6 +20,9 @@ import memory.Memoryapp.Holder.ProfileDataHolder;
 import memory.Memoryapp.Object.User;
 import memory.Memoryapp.R;
 
+/**
+ *This class represents a user adapter.
+ */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
     private Context mContext;
@@ -27,6 +30,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private List<User> filterUserList;
     private MemberFilter filter;
 
+    /**
+     * Parameterized Constructor.
+     * @param mContext a given context.
+     * @param groupDiaryList a given list of a group diary's users.
+     */
     public UserAdapter(Context mContext, List<User> groupDiaryList) {
         this.mContext = mContext;
         this.userList = groupDiaryList;
@@ -34,6 +42,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         filter = new MemberFilter(this.userList, this);
     }
 
+    /**
+     *  The creation of the holder.
+     * @param viewGroup a given viewGroup
+     * @param i a given index.
+     * @return a userViewHolder.
+     */
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -43,6 +57,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return holder;
     }
 
+    /**
+     * While scrolling down the list, an old view is recycled and reused by binding new data to it.
+     * @param userViewHolder
+     * @param i a given index.
+     */
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder userViewHolder, int i) {
         final User user = userList.get(i);
@@ -59,24 +78,43 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         });
     }
 
+    /**
+     * Sets the filterUserList.
+     * @param list a given users list.
+     */
     public void setList(List<User> list){
         this.filterUserList = list;
     }
 
+    /**
+     * Filters a users list that was given in a string format.
+     * @param text a given users list.
+     */
     public void filterList(String text){
         filter.filter(text);
     }
 
+    /**
+     *
+     * @return the users list size after it was filtered.
+     */
     @Override
     public int getItemCount() {
         return filterUserList.size();
     }
 
+    /**
+     * An inner class that represents the total look of the users list.
+     */
     public class UserViewHolder extends RecyclerView.ViewHolder{
 
         TextView userName;
         CircleImageView userImage;
 
+        /**
+         * Parameterized Constructor.
+         * @param itemView the user's view.
+         */
         public UserViewHolder(@NonNull final View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.group_name);

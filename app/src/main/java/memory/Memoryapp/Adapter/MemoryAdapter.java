@@ -26,11 +26,19 @@ import memory.Memoryapp.Object.Memory;
 import memory.Memoryapp.Object.User;
 import memory.Memoryapp.R;
 
+/**
+ * This class represents a memory adapter.
+ */
 public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryViewHolder>{
     private Context mContext;
     private DatabaseReference mData;
     private List<Memory> memoryList;
 
+    /**
+     * Parameterized Constructor.
+     * @param mContext the context.
+     * @param memoryList the memories list.
+     */
     public MemoryAdapter(Context mContext, List<Memory> memoryList) {
         this.mContext = mContext;
         this.memoryList = memoryList;
