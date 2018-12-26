@@ -73,10 +73,11 @@ public class GroupDiary extends Diary {
      * Sets this group Diary's parameters all together.
      * @param g the new group Diary to be set from.
      */
-    public void setAll(GroupDiary g){
-        setAll((Diary)g);
-        this.admin = g.admin;
+    @Override
+    public void setAll(Diary d) {
+        super.setAll(d);
+        this.admin = ((GroupDiary)d).admin;
         this.groupMember.clear();
-        this.groupMember.addAll(g.groupMember);
+        this.groupMember.addAll(((GroupDiary)d).groupMember);
     }
 }
