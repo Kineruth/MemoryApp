@@ -15,6 +15,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/inputs"
+        android:fontFamily="@font/maitree"
         android:text="Memory Name"
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -50,12 +51,14 @@
         android:layout_height="50dp"
         android:layout_below="@id/add_description"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="9dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/my_button"
+        android:fontFamily="serif"
         android:text="Add Memory"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

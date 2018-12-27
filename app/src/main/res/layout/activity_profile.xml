@@ -15,47 +15,51 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="110dp"
         android:src="@drawable/profile_image"/>
+
     <TextView
         android:id="@+id/user_name_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="user name"
         android:layout_below="@id/visit_profile_image"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:fontFamily="@font/maitree"
+        android:text="User Name"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/user_status_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="user status"
         android:layout_below="@id/user_name_profile"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="25dp"
+        android:layout_marginRight="15dp"
+        android:fontFamily="@font/maitree"
+        android:text="User Status"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="25sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/add_to_group_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/user_status_profile"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="65dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="65dp"
-        android:textColor="@android:color/background_light"
         android:background="@drawable/my_button"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:fontFamily="serif"
         android:text="Add"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

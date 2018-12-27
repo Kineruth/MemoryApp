@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appBarLayout">
+
         <TextView
             android:id="@+id/PersonalDiaryText"
             android:layout_width="match_parent"
@@ -31,10 +32,12 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:fontFamily="@font/maitree"
             android:hint="Personal Diary"
             android:scaleType="fitCenter"
             android:textAlignment="center"
-            android:textSize="26sp"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
@@ -51,9 +54,11 @@
             android:layout_below="@+id/PersonalDiaryRecyclerView"
             android:layout_alignParentStart="true"
             android:layout_centerHorizontal="true"
+            android:fontFamily="@font/maitree"
             android:hint="Group Diary"
             android:textAlignment="center"
-            android:textSize="26sp"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView

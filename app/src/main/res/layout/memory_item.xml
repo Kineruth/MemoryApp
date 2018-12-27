@@ -25,9 +25,13 @@
                     android:id="@+id/profile_iv"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="69dp"
                     android:layout_marginLeft="25dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:src="@drawable/profile_image" />
 
 
@@ -35,12 +39,21 @@
                     android:id="@+id/username_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="117dp"
+                    android:layout_marginLeft="62dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="124dp"
+                    android:layout_marginBottom="4dp"
                     android:layout_toRightOf="@+id/profile_iv"
+                    android:fontFamily="@font/maitree"
                     android:text="Dvir Barzilay"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -55,9 +68,12 @@
                     android:id="@+id/memory_name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/maitree"
                     android:text="Title"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -66,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/memory_name_tv"
                     android:layout_marginBottom="5dp"
+                    android:fontFamily="serif"
                     android:text="mitch.tabian moutains #earthporn #mountains"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -93,6 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
+                    android:fontFamily="@font/maitree"
                     android:text="3 DAYS AGO"
                     android:textColor="@color/grey"
                     android:textSize="12sp" />
