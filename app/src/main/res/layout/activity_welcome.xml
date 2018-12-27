@@ -8,17 +8,17 @@
 
     <TextView
         android:id="@+id/welcomeTV"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/maitree"
         android:gravity="center_horizontal"
-        android:text="There are moments that must be cherished and not forgotten..\nOur app will make that happen"
+        android:text="There are moments\nthat must be cherished\nand not forgotten.."
         android:textAlignment="center"
         android:textColor="#007d8c"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <ImageView
@@ -27,12 +27,16 @@
         android:layout_height="250dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
-        android:src="@drawable/ill_eula" />
+        android:src="@drawable/welcome_image" />
 
     <TextView
         android:id="@+id/agreeNContinueTVBtn"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp" />
 
     <TextView
         android:id="@+id/tapAnywhereToConTV"
@@ -41,7 +45,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="70dp"
-        android:fontFamily="@font/abel"
+        android:fontFamily="@font/maitree"
         android:orientation="vertical"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
