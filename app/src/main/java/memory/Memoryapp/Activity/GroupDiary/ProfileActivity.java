@@ -1,17 +1,12 @@
 package memory.Memoryapp.Activity.GroupDiary;
 
-import android.app.ProgressDialog;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -58,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initProfileDetails() {
-        User user = ProfileDataHolder.getUserDataHolder().getUser();
+        User user = ProfileDataHolder.getProfileDataHolder().getProfile();
         userName.setText(user.getName());
         userStatus.setText(user.getStatus());
         if (!user.getImage().isEmpty())
@@ -68,12 +63,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void clickOnAddButton() {
         final String groupId = GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary().getUid();
-        String profileIf = ProfileDataHolder.getUserDataHolder().getUser().getUid();
+        String profileIf = ProfileDataHolder.getProfileDataHolder().getProfile().getUid();
         GroupDiaryDataHolder.getGroupDataHolder().getGroupDiary().getGroupMember().add(profileIf);
-        ProfileDataHolder.getUserDataHolder().getUser().getGroupId().add(groupId);
+        ProfileDataHolder.getProfileDataHolder().getProfile().getGroupId().add(groupId);
         mData.child("Users")
                 .child(profileIf)
-                .setValue(ProfileDataHolder.getUserDataHolder().getUser())
+                .setValue(ProfileDataHolder.getProfileDataHolder().getProfile())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

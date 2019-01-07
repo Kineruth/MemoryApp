@@ -17,4 +17,8 @@ public class PersonalDiaryDataHolder {
     public PersonalDiary getPersonalDiary(){
         return personalDiary;
     }
+
+    public void clearPersonalDiary(){
+        personalDiary.setAll(new PersonalDiary());
+    }
 }

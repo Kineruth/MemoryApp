@@ -71,7 +71,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         userViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProfileDataHolder.getUserDataHolder().getUser().setAll(user);
+                ProfileDataHolder.getProfileDataHolder().getProfile().setAll(user);
                 Intent intent = new Intent(mContext, ProfileActivity.class);
                 mContext.startActivity(intent);
             }

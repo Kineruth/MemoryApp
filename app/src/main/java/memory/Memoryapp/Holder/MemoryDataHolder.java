@@ -17,4 +17,8 @@ public class MemoryDataHolder {
     public Memory getMemory(){
         return memory;
     }
+
+    public void clearMemory(){
+        memory.setAll(new Memory());
+    }
 }

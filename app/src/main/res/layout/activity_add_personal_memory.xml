@@ -16,7 +16,7 @@
         android:layout_marginRight="15dp"
         android:background="@drawable/inputs"
         android:fontFamily="@font/maitree"
-        android:text="Memory Name"
+        android:hint="Memory Name"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="25sp"

@@ -30,11 +30,11 @@ import memory.Memoryapp.R;
  */
 public class LoginActivity extends Activity implements Validator.ValidationListener {
 
-    @NotEmpty()
+    @NotEmpty
     @Email()
     private EditText email;
     @NotEmpty()
-    @Password(min = 1, message = "Minimum 6 Characters")
+    @Password(message = "Minimum 6 Characters")
     private EditText password;
     private Validator validator;
     private static boolean valIsDone;

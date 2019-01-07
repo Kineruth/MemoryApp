@@ -18,4 +18,8 @@ public class UserDataHolder {
     public User getUser(){
         return user;
     }
+
+    public void clearUser(){
+        user.setAll(new User());
+    }
 }

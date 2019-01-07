@@ -4,18 +4,22 @@ import memory.Memoryapp.Object.User;
 
 public class ProfileDataHolder {
 
-    private User user = null;
+    private User profile = null;
     private static final ProfileDataHolder data = new ProfileDataHolder();
 
     private ProfileDataHolder(){
-        user = new User();
+        profile = new User();
     }
 
-    public static ProfileDataHolder getUserDataHolder(){
+    public static ProfileDataHolder getProfileDataHolder(){
         return data;
     }
 
-    public User getUser(){
-        return user;
+    public User getProfile(){
+        return profile;
+    }
+
+    public void clearProfile(){
+        profile.setAll(new User());
     }
 }

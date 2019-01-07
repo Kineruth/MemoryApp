@@ -14,7 +14,7 @@ public class User {
     /**
      * Default Constructor
      */
-    public User() { }
+    public User() {groupId.clear(); }
 
     /**
      * Parameterized Constructor
@@ -100,5 +100,16 @@ public class User {
 
     public void setGroupId(List<String> groupId) {
         this.groupId = groupId;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "image='" + image + '\'' +
+                ", name='" + name + '\'' +
+                ", status='" + status + '\'' +
+                ", uid='" + uid + '\'' +
+                ", groupId=" + groupId +
+                '}';
     }
 }

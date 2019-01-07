@@ -2,17 +2,16 @@ package memory.Memoryapp.Activity.Main;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +24,10 @@ import java.util.List;
 import memory.Memoryapp.Activity.Start.LoginActivity;
 import memory.Memoryapp.Adapter.GroupDiaryAdapter;
 import memory.Memoryapp.Adapter.PersonalDiaryAdapter;
+import memory.Memoryapp.Holder.GroupDiaryDataHolder;
+import memory.Memoryapp.Holder.MemoryDataHolder;
+import memory.Memoryapp.Holder.PersonalDiaryDataHolder;
+import memory.Memoryapp.Holder.ProfileDataHolder;
 import memory.Memoryapp.Holder.UserDataHolder;
 import memory.Memoryapp.Object.GroupDiary;
 import memory.Memoryapp.Object.PersonalDiary;
@@ -235,9 +238,24 @@ public class MainActivity extends AppCompatActivity {
      * An intent - basically a message to say you did or want something to happen.
      */
     private void loginActivity() {
+        clearDataHolderes();
         mAuth.signOut();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UserDataHolder.getUserDataHolder().getUser().getGroupId().clear();
+    }
+
+    private void clearDataHolderes() {
+        UserDataHolder.getUserDataHolder().clearUser();
+        ProfileDataHolder.getProfileDataHolder().clearProfile();
+        PersonalDiaryDataHolder.getPersonalDiaryDataHolder().clearPersonalDiary();
+        MemoryDataHolder.getMemoryDataHolder().clearMemory();
+        GroupDiaryDataHolder.getGroupDataHolder().clearGroupDiary();
     }
 }

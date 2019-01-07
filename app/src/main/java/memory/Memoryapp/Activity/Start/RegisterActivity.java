@@ -110,12 +110,6 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                             mData.child("Users")
                                     .child(mAuth.getCurrentUser().getUid())
                                     .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    mData.child("Users")
-                                            .child(mAuth.getCurrentUser().getUid())
-                                            .setValue(new User(name, mAuth.getCurrentUser().getUid()))
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     mData.child("Personal Diary")
@@ -132,9 +126,8 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                                 }
                             });
                         }
-                    });
         }
-    }
+
 
     /**
      * Called if any of the Rules fail.

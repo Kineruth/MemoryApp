@@ -18,4 +18,8 @@ public class GroupDiaryDataHolder {
     public GroupDiary getGroupDiary(){
         return groupDiary;
     }
+
+    public void clearGroupDiary(){
+        groupDiary.setAll(new GroupDiary());
+    }
 }
