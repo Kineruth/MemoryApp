@@ -43,7 +43,6 @@ public class AddMemberActivity extends AppCompatActivity implements SearchView.O
         setContentView(R.layout.activity_add_member);
         initFireBase();
         initFields();
-        initRecyclerView();
     }
 
     @Override

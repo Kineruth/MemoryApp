@@ -53,6 +53,7 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
     private FirebaseAuth mAuth;
     private DatabaseReference mData;
     private StorageReference userProfileImageRef;
+    private String downloaedUrl;
 
     /**
      * In case the activity needs to be recreated - the saved state can be passed back to onCreate
@@ -146,34 +147,11 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
             String setName = userName.getText().toString();
             String setStatus = userStatus.getText().toString();
             final String uid = mAuth.getCurrentUser().getUid();
-            final User user = new User(setName, setStatus, uid);
-            mData.child("Users").child(mAuth.getCurrentUser().getUid()).child("image").addListenerForSingleValueEvent(new ValueEventListener() {
-                /**
-                 * It is triggered once when the listener is attached,
-                 * and again every time the data, including children, changes.
-                 * @param dataSnapshot the data.
-                 */
+            final User user = new User(setName, setStatus, uid, downloaedUrl);
+            mData.child("Users").child(mAuth.getCurrentUser().getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    user.setImage(dataSnapshot.getValue(String.class));
-                    mData.child("Users")
-                            .child(uid)
-                            .setValue(user)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    finish();
-                                }
-                            });
-                }
-
-                /**
-                 * when an error occurrs.
-                 * @param databaseError the error.
-                 */
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                public void onSuccess(Void aVoid) {
+                    finish();
                 }
             });
         }
@@ -214,15 +192,8 @@ public class SettingsActivity extends AppCompatActivity implements Validator.Val
                         filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                final String downloaedUrl = uri.toString();
-                                mData.child("Users").child(mAuth.getCurrentUser().getUid()).child("image")
-                                        .setValue(downloaedUrl)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Picasso.get().load(downloaedUrl).into(userProfileImage);
-                                            }
-                                        });
+                                downloaedUrl = uri.toString();
+                                Picasso.get().load(downloaedUrl).into(userProfileImage);
                             }
                         });
                     }
