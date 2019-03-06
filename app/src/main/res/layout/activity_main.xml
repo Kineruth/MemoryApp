@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context="memory.Memoryapp.MainActivity">
+    tools:context="memory.Memoryapp.Activity.Main.MainActivity">
 
 
 
@@ -18,21 +18,54 @@
             android:id="@+id/main_page_toolbar"
             layout="@layout/app_bar_layout">
         </include>
-        <android.support.design.widget.TabLayout
-            android:id="@+id/main_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/main_tabs_pager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/appBarLayout">
 
-    </android.support.v4.view.ViewPager>
+        <TextView
+            android:id="@+id/PersonalDiaryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/maitree"
+            android:hint="Personal Diary"
+            android:scaleType="fitCenter"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/PersonalDiaryRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_below="@+id/PersonalDiaryText"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/GroupDiaryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/PersonalDiaryRecyclerView"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/maitree"
+            android:hint="Group Diary"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/GroupDiaryRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/GroupDiaryText"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 </RelativeLayout>

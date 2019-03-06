@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -49,48 +50,55 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="17dp"/>
+
             <TextView
                 android:id="@+id/tvResetPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/etPassword"
-                android:text="Forget Password"
-                android:layout_marginTop="10dp"
+                android:layout_alignParentStart="true"
                 android:layout_marginLeft="17dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="17dp"
+                android:fontFamily="@font/maitree"
+                android:text="Forgot Password?"
                 android:textAlignment="center"
+                android:textColor="#007d8c"
                 android:textSize="17sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvResetPassword"
-                android:padding="4dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="17dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="17dp"
+                android:background="@drawable/my_button"
+                android:fontFamily="serif"
+                android:padding="4dp"
                 android:text="Login"
                 android:textAllCaps="false"
-                android:textSize="24sp"
                 android:textColor="@android:color/background_light"
-                android:background="@drawable/my_button"/>
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tvRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/btnLogin"
-                android:text="No Account Yet?\n Create One Now"
-                android:layout_marginTop="10dp"
+                android:layout_alignParentStart="true"
                 android:layout_marginLeft="17dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="17dp"
+                android:fontFamily="@font/maitree"
+                android:text="No Account Yet? Create One Now!"
                 android:textAlignment="center"
+                android:textColor="#007d8c"
                 android:textSize="17sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textStyle="bold" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

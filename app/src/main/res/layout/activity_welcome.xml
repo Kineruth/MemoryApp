@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomeActivity">
+    tools:context=".Activity.Start.WelcomeActivity">
 
     <TextView
         android:id="@+id/welcomeTV"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="Welcome to MemoryApp"
-        android:textColor="#118C7E"
-        android:textSize="24dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/maitree"
+        android:gravity="center_horizontal"
+        android:text="There are moments\nthat must be cherished\nand not forgotten.."
+        android:textAlignment="center"
+        android:textColor="#007d8c"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <ImageView
@@ -24,23 +27,31 @@
         android:layout_height="250dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
-        android:src="@drawable/ill_eula" />
+        android:src="@drawable/welcome_image" />
 
     <TextView
         android:id="@+id/agreeNContinueTVBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp" />
+
+    <TextView
+        android:id="@+id/tapAnywhereToConTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/btn_green_round_corners"
-        android:paddingLeft="35dp"
+        android:layout_marginBottom="70dp"
+        android:fontFamily="@font/maitree"
+        android:orientation="vertical"
         android:paddingTop="10dp"
-        android:paddingRight="35dp"
         android:paddingBottom="10dp"
-        android:text="Enter"
-        android:textAllCaps="true"
-        android:textColor="#ffffff"
-        android:textSize="24dp"
+        android:text="tap anywhere to continue"
+        android:textAlignment="center"
+        android:textColor="#007d8c"
+        android:textSize="18sp"
         android:textStyle="bold" />
 </RelativeLayout>
